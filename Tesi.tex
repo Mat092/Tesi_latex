@@ -1,0 +1,186 @@
+\documentclass[12pt,a4paper]{report}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[english,italian]{babel}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{mathrsfs}
+\usepackage{graphicx}
+\usepackage{amsthm}
+\usepackage{newlfont}
+\usepackage{color}
+\usepackage{natbib}
+
+\textwidth=450pt\oddsidemargin=0pt
+
+\begin{document}
+
+\begin{titlepage}
+
+%
+%
+% UNA VOLTA FATTE LE DOVUTE MODIFICHE SOSTITUIRE "RED" CON "BLACK" NEI COMANDI \textcolor
+%
+%
+\begin{center}
+{{\Large{\textsc{Alma Mater Studiorum $\cdot$ Universit\`a di Bologna}}}} 
+\rule[0.1cm]{15.8cm}{0.1mm}
+\rule[0.5cm]{15.8cm}{0.6mm}
+\\\vspace{3mm}
+
+{\small{\bf Scuola di Scienze \\ 
+Dipartimento di Fisica e Astronomia\\
+Corso di Laurea in Fisica}}
+
+\end{center}
+
+\vspace{23mm}
+
+\begin{center}\textcolor{red}{
+%
+% INSERIRE IL TITOLO DELLA TESI
+%
+{\LARGE{\bf TITOLO TESI}}\\
+}\end{center}
+
+\vspace{50mm} \par \noindent
+
+\begin{minipage}[t]{0.47\textwidth}
+%
+% INSERIRE IL NOME DEL RELATORE CON IL RELATIVO TITOLO DI DOTTORE O PROFESSORE
+%
+{\large{\bf Relatore: \vspace{2mm}\\\textcolor{red}{
+Prof./Dott. Enrico Giampieri}\\\\
+%
+% INSERIRE IL NOME DEL CORRELATORE CON IL RELATIVO TITOLO DI DOTTORE O PROFESSORE
+%
+% SE NON AVETE UN CORRELATORE CANCELLATE LE PROSSIME 3 RIGHE
+%
+\textcolor{red}{
+\bf Correlatore: (eventuale)
+\vspace{2mm}\\
+Prof./Dott. Nome Cognome\\\\}}}
+\end{minipage}
+%
+\hfill
+%
+\begin{minipage}[t]{0.47\textwidth}\raggedleft \textcolor{black}{
+{\large{\bf Presentata da:
+\vspace{2mm}\\
+%
+% INSERIRE IL NOME DEL CANDIDATO
+%
+Mattia Ceccarelli}}}
+\end{minipage}
+
+\vspace{40mm}
+
+\begin{center}
+%
+% INSERIRE L'ANNO ACCADEMICO
+%
+Anno Accademico \textcolor{black}{ 2017/2018}
+\end{center}
+
+\end{titlepage}
+
+%\thispagestyle{empty}
+%\clearpage\null\newpage
+
+\tableofcontents
+%\clearpage{\pagestyle{empty}\cleardoublepage}1
+%\listoffigure
+
+\chapter{Introduzione}
+
+In questo capitolo si introdurranno i principali mezzi utilizzati nello svolgimento del progetto di tesi, ossia Algoritmi Genetici per la ricerca di minimi per una funzione ???????? e Reti Neurali fully connected, che svolgono il ruolo di funzione a molti parametri da ottimizare in un problema di classificazione.
+
+\section{Algoritmi Genetici}
+
+Gli algoritmi genetici sono software di ricerca ispirati dalla selezione naturale applicata ad una popolazione di individui, chiamati soluzioni, caratterizzati da un \textit{genoma o cromosoma ???}, spesso rappresentato da una lista di numeri binari o da una  stringa.
+Il parametro che differenzia soluzioni migliori o peggiori è il \textit{fitness}, misurato attraverso la \textit{funzione di fitness} che dipende dal problema.
+L' evoluzione della popolazione avviene attraverso la selezione dei migliori individui che passeranno il loro \textit{genoma o cromosoma ???} alla generazione successiva.
+
+\cite{genetic-algorithm-mitchell}
+
+I principali operatori che compongo un semplice algoritmo genetico sono:
+
+\paragraph{Selezione} Questo operatore seleziona i migliori individui, più è alto è il fitness e più è probabile che un individuo venga scelto per creare la nuova generazione
+
+\paragraph{Crossover} L'operatore di Crossover produce un taglio nel genoma degli individui ``genitori`` per formare due individui ''figli'': per esempio prendendo le due stringhe 111000 e 000111, producendo un taglio alla terza posizione otterremo le stringhe  111111 e 000000.
+
+\paragraph{Mutazione} L'operatore di mutazione si occupa di cambiare casualmente uno o più caratteri di individui scelti a caso nella popolazione.
+
+Il funzionamento di un tipico algoritmo genetico,come descritto da \cite{genetic-algorithm-mitchell} una volta definito il problema,  procede in questo modo:
+
+\begin{enumerate}
+ \item Creazione casuale di \textit{n} elementi, che rappresentano la prima popolazione. 
+ \item Calcolo del fitness $f(x)$ di ogni soluzione $x$ della popolazione.
+ \item Fino a che non sono stati generati \textit{n} discendenti ripetere:
+ \begin{enumerate}
+  \item[a.] Selezione di due genitori dalla popolazione dove un individuo può anche essere scelto più volte.
+  \item[b.] Con probabilità $p_{c}$ (probabilità di crossover) applicare l'operatore di crossover sui due genitori. Nel caso non avvenisse alcun crossover, copiare i genitori.
+  \item[c.] Con probabilità $p_{m}$ (probabilità di mutazione) applicare l'operatore di mutazione sui figli.
+ \end{enumerate}
+ \item Sostituire la vecchia popolazione con la nuova generazione e ripetere dal secondo passaggio.
+\end{enumerate}
+
+Ogni iterazione di questo processo è chiamata \textit{generazione}.
+
+Da Completare....
+
+
+\section{Reti Neurali}
+
+Una rete neurale è una struttura interconnessa di semplici unità procedurali, chiamate nodi, la quale funzionalità si ispira ai neuroni del regno animale. La capacità di elaborazione della rete neurale è contenuta nella ``forza`` delle connessioni tra nodi, espressa dai \textit{pesi} dei collegamenti, ottenuti da processi di \textit{ addestramento} o \textit{apprendimento}. \cite{neural-net-gurney}
+
+\subsection{Il Perceptron}
+
+\cite{neural-net-nielsen}
+Il perceptron è stato sviluppato negli anni '50 e '60 dal ricercatore Frank Rosenblatt ispirandosi ai lavori antecedenti di Warren McCulloch e Walter Pitts.
+È l'unità di base di una rete neurale e il suo funzionamento è il seguente:
+il perceptron riceve $n$ valori in ingresso $x_{1},x_{2},...,x_{n}$ e restituisce $1$ o $0$ a seconda che la somma pesata degli input superi o no un valore di soglia.
+
+%Immagine del perceptron con n inputs
+
+\begin{center}
+\begin{cases}
+ 0 \text{ se } \sum_{i} x_{i}w_{i} \leq valore\text{ }di\text{ }soglia\\
+ 1 \text{ se } \sum_{i} x_{i}w_{i} > valore\text{ }di\text{ }soglia
+\end{cases}
+\end{center}
+
+anche se è più comune trovare la scrittura:
+
+\begin{center}
+\begin{cases}
+ 0 \text{ se } \sum_{i} x_{i}w_{i} + b \leq 0\\
+ 1 \text{ se } \sum_{i} x_{i}w_{i} + b > 0
+\end{cases}
+\end{center}
+
+dove il valore $b$ è detto \textit{bias} del perceptron.
+
+Da completare...
+
+
+\subsection{Evoluzione ed apprendimento}
+
+\chapter{Metodologia}
+
+\chapter{Risultati}
+
+\chapter{Conclusioni}
+
+\nocite{*}
+\addcontentsline{toc}{chapter}{Bibliografia}
+\bibliographystyle{plainnat}
+\bibliography{Bibliografia.bib}
+
+
+\end{document}
+
+
+
+
