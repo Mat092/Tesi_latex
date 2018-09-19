@@ -12,6 +12,7 @@
 \usepackage{color}
 \usepackage{natbib}
 \usepackage{float}
+\usepackage{textcomp}
 
 \textwidth=450pt\oddsidemargin=0pt
 
@@ -95,7 +96,7 @@ Anno Accademico \textcolor{black}{ 2017/2018}
 
 \chapter{Introduzione}
 
-In questo capitolo si introdurranno i principali mezzi utilizzati nello svolgimento del progetto di tesi, ossia Algoritmi Genetici per la ricerca di minimi per una funzione ???????? e Reti Neurali fully connected, che svolgono il ruolo di funzione a molti parametri da ottimizare in un problema di classificazione.
+In questo capitolo si introdurranno i principali mezzi utilizzati nello svolgimento del progetto di tesi, ossia Algoritmi Genetici per la ricerca dei minimi di una funzione non parametrica \underline{?????} e Reti Neurali \textit{fully connected}, che svolgono il ruolo di funzione a molti parametri da ottimizare in un problema di classificazione.
 
 \section{Algoritmi Genetici}\label{alg-gen}
 
@@ -144,7 +145,7 @@ Da migliorare
 
 Una rete neurale è una struttura interconnessa di semplici unità procedurali, chiamate nodi. La loro funzionalità si ispira ai neuroni del regno animale. La capacità di elaborazione della rete neurale è contenuta nella ``forza`` delle connessioni tra nodi, espressa dai \textit{pesi} dei collegamenti, ottenuti da processi di \textit{ addestramento} o \textit{apprendimento}. \cite{neural-net-gurney}
 
-\subsection{Il perceptron}
+\subsection{Perceptron}
 
 \cite{neural-net-nielsen}
 Il perceptron è stato sviluppato negli anni '50 e '60 dal ricercatore Frank Rosenblatt ispirandosi ai lavori antecedenti di Warren McCulloch e Walter Pitts.
@@ -235,14 +236,19 @@ Da completare con accenno a BackPropagation
 In questo capitolo verranno descritti i metodi utilizzati per l'ottimizzazione di una rete neurale \textit{fully connected} attraverso un algoritmo genetico: l' obiettivo è quello di evolvere la struttura degli \textit{hidden layer} della rete al fine di classificare al meglio 
 un dataset separato in due classi di dati.
 
-\section{La popolazione di reti neurali}
+\section{Popolazione di reti neurali}
 
 L'algoritmo genera la prima popolazione di oggetti \textit{Random Network} casualmente, i parametri interni sono stati scelti in modo che questa fosse limitata e non raggiungesse subito un risultato ottimale.
 In particolare il numero di layer è compreso tra 1 e 5 mentre il numero massimo di neuroni per layer è 25.
 La popolazione è stata mantenuta al massimo di 20 individui per lo stesso motivo.
 Il \textit{cromosoma} di un individuo è quindi una lista di numeri di lunghezza variabile e l'algoritmo genetico è stato adattato a questo problema: la ricerca di un minimo in uno spazio in cui il numero di variabili non è definito.
 
-\section{Crossover}
+\section{Operatori}
+
+La differenza nell'utilizzare cromosomi di lunghezza variabile si ritrova soprattutto negli operatori dell'algoritmo genetico scritto \textit{ad hoc} per il progetto che devono gestire una variabile che normalmente non rappresenterebbe un problema. 
+Per questo ogni operatore è stato adattato per fare in modo che sia possibile esplorare lo spazio delle soluzioni anche in tal senso.
+
+\subsection{Crossover}
 
 Il Crossover si differenzia da quello di un algoritmo genetico in cui la lunghezza di ogni cromosoma sia prestabilita. 
 Infatti, è facile che i due genitori selezionati non abbiano lo stesso numero di hidden layer: in questo caso non è possibile ''tagliare'' il cromosoma nello stesso punto (come mostrato nel capitolo \ref{alg-gen}).
@@ -251,13 +257,13 @@ Inoltre è necessario che la lunghezza dei figli possa essere diversa da quella 
 Seguendo questi propositi, vengono scelti casualmente due punti di taglio, uno per genitore, da una media di tre interi casuali (questo per fare in modo che la lunghezza non cambi troppo tra una generazione e la successiva).
 Dopodiché il crossover procede come in un classico algoritmo genetico, ossia restituendo due figli combinazione delle parti tagliate.
 
-Un esempio di funzionamento :
+Un esempio di funzionamento, scelti i genitori:
 
 \begin{center}
  genitore 1 = [10,3,4,11];  genitore 2 = [7,23,1,2,19]\\
 \end{center}
 
-prendendo due tagli alla terza e seconda posizione si ottengono:
+e prendendo due tagli rispettivamente alla $3^{a}$ e $2^{a}$ posizione si ottengono:
 
 \begin{center}
  figlio 1 = [10,3,4,1,2,19]; figlio 2 = [7,23,11]
@@ -265,13 +271,33 @@ prendendo due tagli alla terza e seconda posizione si ottengono:
 
 i quali popoleranno la generazione successiva.
 
-\section{Mutazione}
+\subsection{Mutazione}
 
+Anche il processo di mutazione ha subito qualche variazione, infatti, occorre che anche la lunghezza del cromosoma possa cambiare a seguito dell'azione di questo operatore.
+Per fare ciò sono state introdotte due probabilità indipendenti: $p_{m} = 5$\textdiscount \text{ }rappresenta la probabilità che un layer qualsiasi del cromosoma venga modificato aggiungendo o togliendo un neurone, $p_{l} = 5$\textdiscount \text{ }rappresenta invece la probabilità che venga aggiunto o rimosso un layer dalla rete.
 
+\subsection{Selezione}
 
-\section{Selezione}
+Nella varietà di operatori di selezione, verranno comparati i risultati di due algoritmi, scelti per la semplicità di implementazione che nulla toglie alla capacità di questi di evolvere il sistema.
+
+\begin{enumerate}
+ \item Il primo, denominato \textit{random mate}, è il più rapido: partendo da una popolazione ordinata per miglior \textit{fitness} passa alla nuova generazione un' \textit{élite} di individui pari al 20\textdiscount.
+ Poi scorre dall'inizio la popolazione per il primo genitore, mentre il secondo genitore viene scelto a caso. 
+ Questo avviene fino a che la generazione successiva non è riempita.
+ 
+ \item Il secondo, denominato \textit{all sons}, è concettualmente più semplice ma richiede molto più tempo per completare una run: continuando a mantenere un 20\textdiscount di \textit{élite}, in una popolazione viene fatto il crossover di ogni coppia possibile di individui.
+ Di questi vengono scelti i migliori per riempire la generazione successiva.
+ È facile capire come questo sia il metodo più dispendioso in termini di risorse, infatti ogni rete va addestrata per determinarne il \textit{fitness} e in una popolazioni di soli 10 individui il numero totale di reti da valutare per ogni generazione sale a 200 =  ($10*10*2$)
+ 
+\end{enumerate}
+
+Mantenere un'\textit{élite} di individui è utile per fare in modo che la popolazione evolva ma allo stesso tempo mantenga intatti i caratteri che nella precedente generazione hanno conseguito il miglior score.
 
 \section{Funzione di Fitness}
+
+
+
+\section{Datasets}
 
 \chapter{Risultati}
 
