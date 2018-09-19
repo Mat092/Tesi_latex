@@ -295,9 +295,37 @@ Mantenere un'\textit{élite} di individui è utile per fare in modo che la popol
 
 \section{Funzione di Fitness}
 
+La funzione di fitness dell'algoritmo riceve il cromosoma di ogni individuo che come mostrato in sezioni precedenti ha la forma di una lista di interi, che rappresentano gli \textit{hidden layer} della rete.
+È a questo punto che viene costruita la rete vera e propria, che altro non è che un'istanza della classe \textit{MLPClassifier} (che sta per \textit{Multi-layer Perceptron classifier}) della libreria \textit{scikit learn} (\cite{scikit-learn}).
 
+L'addestramento della rete è affidato alla funzione \textit{fit}, propria di ogni Classificatore di \textit{scikit learn}, che restituisce un oggetto \textit{MLP} addestrato sul \textit{training set}.
+
+A questo punto è possibile misurare la risposta di un \textit{MLP} addestrato agli input: l'\textit{input layer} è composto da due nodi, ossia le due coordinate di un punto, l'\textit{output layer} da un solo nodo, con output compreso tra 0 (classe 1) e 1(classe 2) come mostrato in figura \ref{MLP}:
+
+\begin{figure}[H]
+ \centering
+ \includegraphics[scale = 0.55]{images/MLPClass}
+ \caption {\textit{Esempio di MLPClassier generato da un individuo con cromosoma [3,2]}}
+ \label{MLP}
+\end{figure}
+
+Infine si sfrutta il \textit{test set} per attribuire un \textit{fitness}, o \textit{score}, all'individuo.
+Ciò viene fatto utilizzando due metri di valutazione differenti, valutati in parallelo: 
+
+\paragraph{\textit{Accuracy score}} questo metodo è il più semplice e diretto: attribuisce un fitness pari alla percentuale di risposte corrette della rete. Il problema di questo procedimento è che equipara una risposta di $0.51$ ad $1$ ed una di $0.49$ a $0$ nonostante in entrambe le risposte l'incertezza sia alta.
+L'\textit{accuracy score} viene massimizzato nell'algoritmo.
+
+\paragraph{\textit{Logarithmic loss function}} o \textit{log loss}, è una misura di quanta incertezza pone la rete nelle sue risposte. Dalla documentazione di \textit{scikit learn} la \textit{log loss} è definita come "\textit{the negative log-likehood of the true labels given a probabilistic classifier's prediction}" o :  
+
+\begin{equation}
+ -log P(y_{t}|y_{p}) = -(y_{t} log(y_{p}) + (1 - y_{t}) log(1 - y_{p}))
+\end{equation}
+
+Dove  
 
 \section{Datasets}
+
+\section{Pseucodice}
 
 \chapter{Risultati}
 
