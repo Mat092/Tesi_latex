@@ -318,14 +318,75 @@ L'\textit{accuracy score} viene massimizzato nell'algoritmo.
 \paragraph{\textit{Logarithmic loss function}} o \textit{log loss}, è una misura di quanta incertezza pone la rete nelle sue risposte. Dalla documentazione di \textit{scikit learn} la \textit{log loss} è definita come "\textit{the negative log-likehood of the true labels given a probabilistic classifier's prediction}" o :  
 
 \begin{equation}
- -log P(y_{t}|y_{p}) = -(y_{t} log(y_{p}) + (1 - y_{t}) log(1 - y_{p}))
+ -log P(\frac{y_{t}}{y_{p}}) = -(y_{t} log(y_{p}) + (1 - y_{t}) log(1 - y_{p}))
 \end{equation}
-
-Dove  
+Dove $y_{t}$ è la classe dell'oggetto (o $0$ o $1$ ), mentre $y_{p}$ è la probabilità stimata che l'oggetto sia di quella classe.
 
 \section{Datasets}
 
-\section{Pseucodice}
+I set di dati sono artificiali e forniti da \textit{scikit learn}. 
+Sono stati usati per le prove 3 tipi di dataset:
+
+\paragraph{moons} I punti rossi e blu vengono generati a forma di semicerchi, come mostrato in figura \ref{moons} 
+
+\begin{figure}[H]
+ \centering
+ \includegraphics[scale = 0.5]{images/moons_nonoise}
+ \includegraphics[scale = 0.5]{images/moons_noise}
+ \caption{\textit{Nell'immagine sono messe a confronto due versioni del dataset moons: a sinistra priva di noise e a destra con noise = 0.1}}
+ \label{moons}
+\end{figure}
+
+\paragraph{circles} I punti vengono generati a forma di cerchi concentrici, è possibile fornire diversi gradi di separazione ai due cerchi attraverso il parametro \textit{factor}. Il dataset è mostrato in figura \ref{circles}
+
+\begin{figure}[H]
+ \centering
+ \includegraphics[scale = 0.5]{images/circles_nonoise}
+ \includegraphics[scale = 0.5]{images/circles_noise}
+ \caption{\textit{Nell'immagine a confronto due versioni del dataset circles: a sinistra senza noise e a destra con noise = 0.1. Entrambe con lo stesso fattore tra i cerchi}}
+ \label{circles}
+\end{figure}
+
+\paragraph{circles+} È un dataset personalizzato creato dall'unione di due "circles", come mostrato in figura \ref{circles+}
+
+\begin{figure}[H]
+ \centering
+ \includegraphics[scale = 0.5]{images/circles+_nonoise}
+ \includegraphics[scale = 0.5]{images/circles+_noise}
+ \caption{\textit {Nell'immagine a confronto due versioni del dataset circles+: a sinistra con noise = 0 e a destra con noise = 0.1 }}
+ \label{circles+}
+\end{figure}
+
+Per tutti i datasets è possibile attribuire un \textit{noise} in modo che sia più difficile classificarli.
+Nel corso delle prove sono state valutate le prestazioni dell'algoritmo su tutti i datasets.
+Sono stati appositamente evitati dataset lineramente separabili.
+
+I dataset sono generati a partire dalle due funzioni \textit{make moons} e \textit{make circles} di \textit{scikit learn}.
+
+%FORSE QUALCOSA SU TRAIN_TEST_SPLIT e TRASFORMATION
+
+\section{Struttura dell'algoritmo }
+
+Per chiarezza viene riportata la struttura dell'algoritmo, che ne mostra i vari passaggi:
+
+\begin{enumerate}
+ \item creazione della prima generazione.
+ \item generazione del dataset, separazione di questo in \textit{train set} e \textit{test set}, valutazione del \textit{fitness} e ordinamento della popolazione.
+ \item finché l'individuo con il \textit{best fitness} non rimane lo stesso per 5 generazioni consecutive:
+ \begin{enumerate}
+  \item[a.] separazione del dataset in \textit{train set} e \textit{test set} con \textit{random state} differenti ad ogni ciclo.
+  \item[b.] Finchè la nuova generazione non è riempita ripetere:
+  \begin{enumerate}
+   \item [-] Selezione del primo e secondo genitore.
+   \item [-] Crossover e creazione dei figli.
+   \item [-] Mutazione dei figli.
+  \end{enumerate}
+  \item [c.] Valutazione del fitness e ordinamento della nuova generazione
+  \item [d.] Risulatati del migliore individuo sul dataset scelto.
+ \end{enumerate}
+ \item Termine algoritmo.
+\end{enumerate}
+
 
 \chapter{Risultati}
 
