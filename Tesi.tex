@@ -87,8 +87,9 @@ Anno Accademico \textcolor{black}{ 2017/2018}
 
 \end{titlepage}
 
-%\thispagestyle{empty}
-%\clearpage\null\newpage
+
+\thispagestyle{empty}
+\clearpage\null\newpage
 
 \tableofcontents
 %\clearpage{\pagestyle{empty}\cleardoublepage}1
@@ -140,6 +141,10 @@ In tal caso, un individuo è rappresentato da una stringa di bit, la \textit{fun
 Oltre ad essere l'esempio più semplice risulta anche quello più significativo: di fatto lo scopo di un algoritmo genetico è ottimizzare.
 \\
 Da migliorare
+
+\subsection{Drift genetico}
+
+posso scrivere qualcosa su questo visto che viene osservato.
 
 \section{Reti Neurali}
 
@@ -229,7 +234,11 @@ L'addestramento della rete consiste nel valutarne gli output in un determinato s
 
 Da completare con accenno a BackPropagation
 
+\subsection{Adam}
+
 \subsection{Evoluzione di una Rete Neurale}
+
+\section{Dirichlet Process o Chinese Restaurant }
 
 \chapter{Metodologia}
 
@@ -357,7 +366,7 @@ Sono stati usati per le prove 3 tipi di dataset:
  \label{circles+}
 \end{figure}
 
-Per tutti i datasets è possibile attribuire un \textit{noise} in modo che sia più difficile classificarli.
+Per tutti i datasets è possibile attribuire un \textit{noise} in modo che sia più difficile separare le due classi di punti.
 Nel corso delle prove sono state valutate le prestazioni dell'algoritmo su tutti i datasets.
 Sono stati appositamente evitati dataset lineramente separabili.
 
@@ -382,13 +391,167 @@ Per chiarezza viene riportata la struttura dell'algoritmo, che ne mostra i vari 
    \item [-] Mutazione dei figli.
   \end{enumerate}
   \item [c.] Valutazione del fitness e ordinamento della nuova generazione
-  \item [d.] Risulatati del migliore individuo sul dataset scelto.
+  \item [d.] Risultati del migliore individuo sul dataset scelto.
  \end{enumerate}
- \item Termine algoritmo.
+ \item Termine dell'algoritmo.
 \end{enumerate}
 
+Ogni iterazione di questo processo viene chiamata \textit{run}
 
 \chapter{Risultati}
+
+In questo capitolo verranno presentati i dati ottenuti confrontando alcune metodologie discusse nel capitolo precedente.
+
+\section{Moons dataset}
+
+Il primo dataset su cui è stato testato l'algoritmo è \textit{moons}, nelle immagini successive vengono riportati alcuni esempi di run effettute, differenziando \textit{Accuracy score} e \textit{log loss}, cioè i due diversi tipi di \textit{fitness function}, e i due algoritmi di selezione, che sono \textit{random mate} e \textit{all sons}.
+ 
+\subsection{\textit{Accuracy score}}
+
+\begin{figure}[H]
+ \centering
+ \includegraphics[scale = 0.3]{images/moons-rnd-acc./1}
+ \includegraphics[scale = 0.3]{images/moons-rnd-acc./2}
+ \includegraphics[scale = 0.3]{images/moons-rnd-acc./3}
+ \includegraphics[scale = 0.3]{images/moons-rnd-acc./4}
+ \caption{\textit{L'immagine mostra una run tipica usando l'accuracy score e la random mate selection e noise = 0.25}}
+ \label{moons1}
+\end{figure}
+
+Nella figura \ref{moons1} viene mostrata una run rappresentativa effettuata utilizzando come algoritmo di Selezione \textit{random mate}: da notare come queste classificazioni raggiungano uno score molto alto (generalmente 1.0 / 1.0) nonostante la "sicurezza" della rete non sia molto alta nella classicazione di alcuni punti, specialmente se questi si trovano vicini a punti della classe opposta.
+La "sicurezza" della rete è rappresentata sui grafici dal colore: tanto più è intenso e tanto  più il \textit{Multi-layer perceptron} è sicuro della sua scelta.
+Il colore viene quantificato dalla funzione \textit{predict proba} di \textit{scikit learn}, che restituisce la probabilità calcolata dalla rete che un punto sia rosso o blu.
+
+Alcune generazioni (le ultime) vengono escluse dalle immagini perchè, come detto nel capitolo precedente, sono tutte uguali.
+
+In figura \ref{best1} viene invece mostrato il grafico del fitness del miglior individuo in funzione della 
+
+\begin{figure}[H]
+ \centering
+ \includegraphics[scale = 0.4]{images/moons-rnd-acc./best}
+ \caption{\textit{Best fitness di ogni generazione della popolazione con accuracy score e random mate}}
+ \label{best1}
+\end{figure}
+
+Da notare come su questo dataset il raggiungimento di un individuo con fitness molto alto (di fatto insuperabile) sia molto veloce (in questo caso di una sola generazione), nonostante la separazione sembri molto incerta, come specificato sopra.
+
+Risultati simili vengono raggiunti dal secondo algoritmo di selezione, mostrati in figura \ref{moons2}:
+
+\begin{figure}[H]
+ \centering
+ \includegraphics[scale = 0.3]{images/moons-sons-acc./1}
+ \includegraphics[scale = 0.3]{images/moons-sons-acc./2}
+ \includegraphics[scale = 0.3]{images/moons-sons-acc./3}
+ \includegraphics[scale = 0.3]{images/moons-sons-acc./4}
+ \caption{\textit{In figura viene mostrata una run d'esempio utilizzando lo stesso noise e stessa funzione di fitness ma diverso algoritmo di selezione}}
+ \label{moons2}
+\end{figure}
+
+Anche in questo l'evoluzione è rapida e il risultato finale incerto, nonostante l'ottimo risultato raggiunto dalle reti nell'\textit{accuracy test}. L'andamento del \textit{best fitness} è identico a quello precedente (figura \ref{best2}):
+
+\begin{figure}[H]
+ \centering
+ \includegraphics[scale = 0.4]{images/moons-sons-acc./best}
+ \caption{\textit{In figura viene mostrato l'andamento del best fitness in funzione della generazione}}
+ \label{best2}
+\end{figure}
+
+Data l'inefficienza sia computazionale sia in termini di performance, è stato deciso di abbandonare questo algoritmo di selezione per i prossimi datasets.
+
+\subsection{\textit{logarithmic loss}}
+
+Significative differenze su questo dataset si hanno cambiando il tipo di funzione di fitness e passando alla \textit{logaritmic loss}, come mostrato in figura \ref{moons3}
+
+\begin{figure}[H]
+ \centering
+ \includegraphics[scale = 0.3]{images/moons-rnd-log./1}
+ \includegraphics[scale = 0.3]{images/moons-rnd-log./2}
+ \includegraphics[scale = 0.3]{images/moons-rnd-log./3}
+ \includegraphics[scale = 0.3]{images/moons-rnd-log./4}
+ \caption{\textit{Evoluzione di una rete neurale seguendo la logarithmic loss function sul dataset moons}}
+ \label{moons3}
+\end{figure}
+
+\section{Circles Dataset}
+
+Vengono presentati in forma parallela alla sezione precedente i risultati ottenuti dall'algoritmo nel dataset \textit{circles}, con noise = 0.2
+
+\subsection{\textit{Accuracy score}}
+
+\begin{figure}[H]
+ \centering
+ \includegraphics[scale = 0.3]{images/circles-rnd-acc/1}
+ \includegraphics[scale = 0.3]{images/circles-rnd-acc/2}
+ \includegraphics[scale = 0.3]{images/circles-rnd-acc/3}
+ \includegraphics[scale = 0.3]{images/circles-rnd-acc/4}
+ \caption{\textit{L'immagine mostra una run d'esempio nel dataset circles usando l'accuracy score}}
+ \label{circles1}
+\end{figure}
+
+Anche in questo caso la convergenza dell'algoritmo è rapida.
+
+\subsection{\textit{logarithmic loss}}
+
+
+\begin{figure}[H]
+ \centering
+ \includegraphics[scale = 0.3]{images/circle-rnd-log/1}
+ \includegraphics[scale = 0.3]{images/circle-rnd-log/2}
+ \includegraphics[scale = 0.3]{images/circle-rnd-log/3}
+ \includegraphics[scale = 0.3]{images/circle-rnd-log/4}
+ \caption{\textit{L'immagine mostra una run d'esempio nel dataset circles usando la log loss}}
+ \label{circles2}
+\end{figure}
+
+Come per il precedente dataset, questa funzione di fitness sembra riportare una classificazione più precisa, come mostrato in figura \ref{circles2}.
+
+\section{Circles+ Dataset}
+
+I risultati più interessanti provengono dal dataset \textit{Circles+}, ideato come "stress test" per l'algoritmo. Nelle figure \ref{circles+1} e \ref{circles+2} vengono riportati i dati di classificazione.
+
+\subsection{\textit{Accuracy score}}
+
+\begin{figure}[H]
+ \centering
+ \includegraphics[scale = 0.3]{images/circle+-rnd-acc./1}
+ \includegraphics[scale = 0.3]{images/circle+-rnd-acc./2}
+ \includegraphics[scale = 0.3]{images/circle+-rnd-acc./3}
+ \includegraphics[scale = 0.3]{images/circle+-rnd-acc./4}
+ \includegraphics[scale = 0.3]{images/circle+-rnd-acc./5}
+ \\
+ \includegraphics[scale = 0.3]{images/circle+-rnd-acc./6}
+ \includegraphics[scale = 0.3]{images/circle+-rnd-acc./7}
+ \includegraphics[scale = 0.3]{images/circle+-rnd-acc./8}
+ \includegraphics[scale = 0.3]{images/circle+-rnd-acc./9}
+ \caption{\textit{L'immagine mostra una run d'esempio nel dataset circles+ usando l'accuracy score}}
+ \label{circles+1}
+\end{figure}
+
+\subsection{\textit{Logarithmic loss}}
+
+\begin{figure}[H]
+ \centering
+ \includegraphics[scale = 0.3]{images/circle+-rnd-log./1}
+ \includegraphics[scale = 0.3]{images/circle+-rnd-log./2}
+ \includegraphics[scale = 0.3]{images/circle+-rnd-log./3}
+ \includegraphics[scale = 0.3]{images/circle+-rnd-log./4}
+ \\
+ \includegraphics[scale = 0.3]{images/circle+-rnd-log./5}
+ \includegraphics[scale = 0.3]{images/circle+-rnd-log./6}
+ \includegraphics[scale = 0.3]{images/circle+-rnd-log./7}
+ \includegraphics[scale = 0.3]{images/circle+-rnd-log./8}
+ \\
+ \includegraphics[scale = 0.35]{images/circle+-rnd-log./9}
+ \includegraphics[scale = 0.35]{images/circle+-rnd-log./10}
+ \includegraphics[scale = 0.35]{images/circle+-rnd-log./11}
+ \caption{\textit{L'immagine mostra una run d'esempio nel dataset circles+ usando la log loss}}
+ \label{circles+2}
+\end{figure}
+
+In questo caso la convergenza è molto simile nelle due funzioni di fitness.
+In entrambi i casi è possibile osservare un'evoluzione più lenta rispetto ai primi due dataset.
+
+\section{Profondità della rete}
 
 \chapter{Conclusioni}
 
