@@ -331,6 +331,8 @@ L'\textit{accuracy score} viene massimizzato nell'algoritmo.
 \end{equation}
 Dove $y_{t}$ è la classe dell'oggetto (o $0$ o $1$ ), mentre $y_{p}$ è la probabilità stimata che l'oggetto sia di quella classe.
 
+Non è stata attribuita nessuna forma di penalità alla profondità delle retio o ,più in generale, a quanti collegamenti  che potrebbero quindi diventare sempre più grandi e computazionalmente pesanti da gestire, ma verrà studiato in seguito come si comportano queste grandezze (numero di collegamenti e lunghezza). 
+
 \section{Datasets}
 
 I set di dati sono artificiali e forniti da \textit{scikit learn}. 
@@ -372,7 +374,6 @@ Sono stati appositamente evitati dataset lineramente separabili.
 
 I dataset sono generati a partire dalle due funzioni \textit{make moons} e \textit{make circles} di \textit{scikit learn}.
 
-%FORSE QUALCOSA SU TRAIN_TEST_SPLIT e TRASFORMATION
 
 \section{Struttura dell'algoritmo }
 
@@ -398,9 +399,18 @@ Per chiarezza viene riportata la struttura dell'algoritmo, che ne mostra i vari 
 
 Ogni iterazione di questo processo viene chiamata \textit{run}
 
+\section{Analisi Dati}
+
+L'analisi dei dati può essere suddivisa in due parti: nella prima lo studio si concentra sulla capacità dell'algoritmo di separare le due classi di punti in ogni set di dati e con ognuna delle modalità presentate in precedenza, mostrando in ogni caso l'evoluzione qualitativa della migliore rete per ogni generazione.
+
+Nella seconda parte ci si concentra invece su un'analisi quantitativa di alcune grandezze che caratterizzano la rete neurale: il numero di \textit{hidden layer}, la grandezza del layer con minore numero di neuroni e il numero di collegamenti che la rete produce.
+Ognuna di queste è stata studiata in funzione del \textit{noise} del dataset come misura di quanto questo risulti separabile: un dataset più rumoroso risulta inevitabilmente più difficile da classificare, sopratutto nel momento in cui punti blu e rossi siano molto vicini.
+In questo secondo caso vengono effettuate numerose simulazioni e da ognuna vengono estratti i dati citati sopra dalla rete di convergenza.
+Dopodichè viene mostrata la media punto per punto in funzione del noise e la deviazione standard.
+
 \chapter{Risultati}
 
-In questo capitolo verranno presentati i dati ottenuti confrontando alcune metodologie discusse nel capitolo precedente.
+In questo capitolo verranno presentati i dati ottenuti confrontando le  metodologie discusse nel capitolo precedente.
 
 \section{Moons dataset}
 
@@ -551,7 +561,19 @@ I risultati più interessanti provengono dal dataset \textit{Circles+}, ideato c
 In questo caso la convergenza è molto simile nelle due funzioni di fitness.
 In entrambi i casi è possibile osservare un'evoluzione più lenta rispetto ai primi due dataset.
 
-\section{Profondità della rete}
+\section{Profondità della rete e connessioni} 
+
+Due dei parametri importanti da considerare nella costruzione di una rete sono la sua profondità ed il numero di connessioni interne che produce, che ci danno una misura di quanta "informazione" può contenere.
+In questo algoritmo non è stata impostata alcuna penalità per individui con troppi layer o troppi \textit{link}, per cui esiste la possibilità che non converga mai ad un risultato finale, costruendo reti sempre più profonde e precise nel separare i dati.
+In realtà ciò non sembra avvenire nei casi visionati fino ad ora, ossia quando le due classi non sono perfettamente separabili. 
+Inoltre, come già accennato, per la funzione di fitness \textit{accuracy score} non può succedere perchè prima o poi l'algoritmo convergerà ad una soluzione con score pari a 100\textdiscount, di fatto insuperabile.
+
+La situazione è diversa per la \textit{log loss} che invece ha un limite inferiore asintotico. 
+Per questo motivo è stato studiato il comportamento dell'algoritmo con questa funzione di fitness al variare della separabilità dei dati, quantificata dal \textit{noise} dei rispettivi dataset. 
+
+Come mostrato nelle figure \ref{moons}, \ref{circles} e \ref{circles+} del capitolo precedente, è chiaro che i dati con noise nullo siano più semplici da separare di quelli con noise diverso da zero.
+
+
 
 \chapter{Conclusioni}
 
