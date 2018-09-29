@@ -43,7 +43,7 @@ Corso di Laurea in Fisica}}
 %
 % INSERIRE IL TITOLO DELLA TESI
 %
-{\LARGE{\bf TITOLO TESI}}\\
+{\LARGE{\bf }}\\
 }\end{center}
 
 \vspace{50mm} \par \noindent
@@ -52,17 +52,17 @@ Corso di Laurea in Fisica}}
 %
 % INSERIRE IL NOME DEL RELATORE CON IL RELATIVO TITOLO DI DOTTORE O PROFESSORE
 %
-{\large{\bf Relatore: \vspace{2mm}\\\textcolor{red}{
-Prof./Dott. Enrico Giampieri}\\\\
+{\large{\bf Relatore: \vspace{2mm}\\\textcolor{black}{
+Dott. Enrico Giampieri}\\\\
 %
 % INSERIRE IL NOME DEL CORRELATORE CON IL RELATIVO TITOLO DI DOTTORE O PROFESSORE
 %
 % SE NON AVETE UN CORRELATORE CANCELLATE LE PROSSIME 3 RIGHE
 %
 \textcolor{red}{
-\bf Correlatore: (eventuale)
+\bf Correlatore: 
 \vspace{2mm}\\
-Prof./Dott. Nome Cognome\\\\}}}
+Prof./Dott. Nico Curti\\\\}}}
 \end{minipage}
 %
 \hfill
@@ -263,7 +263,7 @@ Il Crossover si differenzia da quello di un algoritmo genetico in cui la lunghez
 Infatti, è facile che i due genitori selezionati non abbiano lo stesso numero di hidden layer: in questo caso non è possibile ''tagliare'' il cromosoma nello stesso punto (come mostrato nel capitolo \ref{alg-gen}).
 Inoltre è necessario che la lunghezza dei figli possa essere diversa da quella dei genitori in modo da non limitare le possibilità di esplorazione.
 
-Seguendo questi propositi, vengono scelti casualmente due punti di taglio, uno per genitore, da una media di tre interi casuali (questo per fare in modo che la lunghezza non cambi troppo tra una generazione e la successiva).
+Seguendo questi propositi, vengono scelti casualmente due punti di taglio, uno per genitore, dalla mediana di tre interi casuali (questo per fare in modo che la lunghezza non cambi troppo tra una generazione e la successiva, come mostrato in figura).
 Dopodiché il crossover procede come in un classico algoritmo genetico, ossia restituendo due figli combinazione delle parti tagliate.
 
 Un esempio di funzionamento, scelti i genitori:
@@ -420,10 +420,10 @@ Il primo dataset su cui è stato testato l'algoritmo è \textit{moons}, nelle im
 
 \begin{figure}[H]
  \centering
- \includegraphics[scale = 0.3]{images/moons-rnd-acc./1}
- \includegraphics[scale = 0.3]{images/moons-rnd-acc./2}
- \includegraphics[scale = 0.3]{images/moons-rnd-acc./3}
- \includegraphics[scale = 0.3]{images/moons-rnd-acc./4}
+ \includegraphics[scale = 0.35]{images/moons-rnd-acc./1}
+ \includegraphics[scale = 0.35]{images/moons-rnd-acc./2}
+ \includegraphics[scale = 0.35]{images/moons-rnd-acc./3}
+ \includegraphics[scale = 0.35]{images/moons-rnd-acc./4}
  \caption{\textit{L'immagine mostra una run tipica usando l'accuracy score e la random mate selection e noise = 0.25}}
  \label{moons1}
 \end{figure}
@@ -449,10 +449,10 @@ Risultati simili vengono raggiunti dal secondo algoritmo di selezione, mostrati 
 
 \begin{figure}[H]
  \centering
- \includegraphics[scale = 0.3]{images/moons-sons-acc./1}
- \includegraphics[scale = 0.3]{images/moons-sons-acc./2}
- \includegraphics[scale = 0.3]{images/moons-sons-acc./3}
- \includegraphics[scale = 0.3]{images/moons-sons-acc./4}
+ \includegraphics[scale = 0.35]{images/moons-sons-acc./1}
+ \includegraphics[scale = 0.35]{images/moons-sons-acc./2}
+ \includegraphics[scale = 0.35]{images/moons-sons-acc./3}
+ \includegraphics[scale = 0.35]{images/moons-sons-acc./4}
  \caption{\textit{In figura viene mostrata una run d'esempio utilizzando lo stesso noise e stessa funzione di fitness ma diverso algoritmo di selezione}}
  \label{moons2}
 \end{figure}
@@ -474,10 +474,10 @@ Significative differenze su questo dataset si hanno cambiando il tipo di funzion
 
 \begin{figure}[H]
  \centering
- \includegraphics[scale = 0.3]{images/moons-rnd-log./1}
- \includegraphics[scale = 0.3]{images/moons-rnd-log./2}
- \includegraphics[scale = 0.3]{images/moons-rnd-log./3}
- \includegraphics[scale = 0.3]{images/moons-rnd-log./4}
+ \includegraphics[scale = 0.35]{images/moons-rnd-log./1}
+ \includegraphics[scale = 0.35]{images/moons-rnd-log./2}
+ \includegraphics[scale = 0.35]{images/moons-rnd-log./3}
+ \includegraphics[scale = 0.35]{images/moons-rnd-log./4}
  \caption{\textit{Evoluzione di una rete neurale seguendo la logarithmic loss function sul dataset moons}}
  \label{moons3}
 \end{figure}
@@ -490,10 +490,10 @@ Vengono presentati in forma parallela alla sezione precedente i risultati ottenu
 
 \begin{figure}[H]
  \centering
- \includegraphics[scale = 0.3]{images/circles-rnd-acc/1}
- \includegraphics[scale = 0.3]{images/circles-rnd-acc/2}
- \includegraphics[scale = 0.3]{images/circles-rnd-acc/3}
- \includegraphics[scale = 0.3]{images/circles-rnd-acc/4}
+ \includegraphics[scale = 0.35]{images/circles-rnd-acc/1}
+ \includegraphics[scale = 0.35]{images/circles-rnd-acc/2}
+ \includegraphics[scale = 0.35]{images/circles-rnd-acc/3}
+ \includegraphics[scale = 0.35]{images/circles-rnd-acc/4}
  \caption{\textit{L'immagine mostra una run d'esempio nel dataset circles usando l'accuracy score}}
  \label{circles1}
 \end{figure}
@@ -505,10 +505,10 @@ Anche in questo caso la convergenza dell'algoritmo è rapida.
 
 \begin{figure}[H]
  \centering
- \includegraphics[scale = 0.3]{images/circle-rnd-log/1}
- \includegraphics[scale = 0.3]{images/circle-rnd-log/2}
- \includegraphics[scale = 0.3]{images/circle-rnd-log/3}
- \includegraphics[scale = 0.3]{images/circle-rnd-log/4}
+ \includegraphics[scale = 0.35]{images/circle-rnd-log/1}
+ \includegraphics[scale = 0.35]{images/circle-rnd-log/2}
+ \includegraphics[scale = 0.35]{images/circle-rnd-log/3}
+ \includegraphics[scale = 0.35]{images/circle-rnd-log/4}
  \caption{\textit{L'immagine mostra una run d'esempio nel dataset circles usando la log loss}}
  \label{circles2}
 \end{figure}
@@ -523,16 +523,17 @@ I risultati più interessanti provengono dal dataset \textit{Circles+}, ideato c
 
 \begin{figure}[H]
  \centering
- \includegraphics[scale = 0.3]{images/circle+-rnd-acc./1}
- \includegraphics[scale = 0.3]{images/circle+-rnd-acc./2}
- \includegraphics[scale = 0.3]{images/circle+-rnd-acc./3}
- \includegraphics[scale = 0.3]{images/circle+-rnd-acc./4}
- \includegraphics[scale = 0.3]{images/circle+-rnd-acc./5}
+ \includegraphics[scale = 0.35]{images/circle+-rnd-acc./1}
+ \includegraphics[scale = 0.35]{images/circle+-rnd-acc./2}
+ \includegraphics[scale = 0.35]{images/circle+-rnd-acc./3}
  \\
- \includegraphics[scale = 0.3]{images/circle+-rnd-acc./6}
- \includegraphics[scale = 0.3]{images/circle+-rnd-acc./7}
- \includegraphics[scale = 0.3]{images/circle+-rnd-acc./8}
- \includegraphics[scale = 0.3]{images/circle+-rnd-acc./9}
+ \includegraphics[scale = 0.35]{images/circle+-rnd-acc./4}
+ \includegraphics[scale = 0.35]{images/circle+-rnd-acc./5}
+ \includegraphics[scale = 0.35]{images/circle+-rnd-acc./6}
+ \\
+ \includegraphics[scale = 0.35]{images/circle+-rnd-acc./7}
+ \includegraphics[scale = 0.35]{images/circle+-rnd-acc./8}
+ \includegraphics[scale = 0.35]{images/circle+-rnd-acc./9}
  \caption{\textit{L'immagine mostra una run d'esempio nel dataset circles+ usando l'accuracy score}}
  \label{circles+1}
 \end{figure}
@@ -541,15 +542,15 @@ I risultati più interessanti provengono dal dataset \textit{Circles+}, ideato c
 
 \begin{figure}[H]
  \centering
- \includegraphics[scale = 0.3]{images/circle+-rnd-log./1}
- \includegraphics[scale = 0.3]{images/circle+-rnd-log./2}
- \includegraphics[scale = 0.3]{images/circle+-rnd-log./3}
- \includegraphics[scale = 0.3]{images/circle+-rnd-log./4}
+ \includegraphics[scale = 0.35]{images/circle+-rnd-log./1}
+ \includegraphics[scale = 0.35]{images/circle+-rnd-log./2}
+ \includegraphics[scale = 0.35]{images/circle+-rnd-log./3}
+ \includegraphics[scale = 0.35]{images/circle+-rnd-log./4}
  \\
- \includegraphics[scale = 0.3]{images/circle+-rnd-log./5}
- \includegraphics[scale = 0.3]{images/circle+-rnd-log./6}
- \includegraphics[scale = 0.3]{images/circle+-rnd-log./7}
- \includegraphics[scale = 0.3]{images/circle+-rnd-log./8}
+ \includegraphics[scale = 0.35]{images/circle+-rnd-log./5}
+ \includegraphics[scale = 0.35]{images/circle+-rnd-log./6}
+ \includegraphics[scale = 0.35]{images/circle+-rnd-log./7}
+ \includegraphics[scale = 0.35]{images/circle+-rnd-log./8}
  \\
  \includegraphics[scale = 0.35]{images/circle+-rnd-log./9}
  \includegraphics[scale = 0.35]{images/circle+-rnd-log./10}
@@ -566,13 +567,43 @@ In entrambi i casi è possibile osservare un'evoluzione più lenta rispetto ai p
 Due dei parametri importanti da considerare nella costruzione di una rete sono la sua profondità ed il numero di connessioni interne che produce, che ci danno una misura di quanta "informazione" può contenere.
 In questo algoritmo non è stata impostata alcuna penalità per individui con troppi layer o troppi \textit{link}, per cui esiste la possibilità che non converga mai ad un risultato finale, costruendo reti sempre più profonde e precise nel separare i dati.
 In realtà ciò non sembra avvenire nei casi visionati fino ad ora, ossia quando le due classi non sono perfettamente separabili. 
-Inoltre, come già accennato, per la funzione di fitness \textit{accuracy score} non può succedere perchè prima o poi l'algoritmo convergerà ad una soluzione con score pari a 100\textdiscount, di fatto insuperabile.
+Inoltre, come già accennato, per la funzione di fitness \textit{accuracy score} non può succedere perchè prima o poi l'algoritmo convergerà ad una soluzione con score pari a $100$\textdiscount, di fatto insuperabile.
 
 La situazione è diversa per la \textit{log loss} che invece ha un limite inferiore asintotico. 
 Per questo motivo è stato studiato il comportamento dell'algoritmo con questa funzione di fitness al variare della separabilità dei dati, quantificata dal \textit{noise} dei rispettivi dataset. 
 
 Come mostrato nelle figure \ref{moons}, \ref{circles} e \ref{circles+} del capitolo precedente, è chiaro che i dati con noise nullo siano più semplici da separare di quelli con noise diverso da zero.
 
+L'obiettivo è quindi quello di studiare l'andamento di questi parametri in funzione del noise dei dataset.
+
+Inziando dal dataset 
+
+\begin{figure}[H]
+ \centering
+ \includegraphics[scale = 0.5]{images/links_noise_moons}
+ \includegraphics[scale = 0.5]{images/small_noise_moons}
+ \includegraphics[scale = 0.5]{images/depth_noise_moons}
+ \caption{\textit{Studio dell'andamento del numero di links(a sinistra), del layer più piccolo(a destra) e della profondità della rete (in basso) in funzione del noise per il dataset moons}}
+ \label{noisemoons}
+\end{figure}
+
+\begin{figure}[H]
+ \centering
+ \includegraphics[scale = 0.5]{images/links_noise_circles}
+ \includegraphics[scale = 0.5]{images/small_noise_circles}
+ \includegraphics[scale = 0.5]{images/depth_noise_circles}
+ \caption {\textit{Studio dell'andamento del numero di links(a sinistra), del layer più piccolo(a destra) e della profondità della rete (in basso) in funzione del noise per il dataset circles}}
+ \label{noisecircles}
+\end{figure}
+
+\begin{figure}[H]
+ \centering
+ \includegraphics[scale = 0.5]{images/links_noise_circles+}
+ \includegraphics[scale = 0.5]{images/small_noise_circles+}
+ \includegraphics[scale = 0.5]{images/depth_noise_circles+}
+ \caption{\textit{Studio dell'andamento del numero di links(a sinistra), del layer più piccolo(a destra) e della profondità della rete (in basso) in funzione del noise per il dataset circles+}}
+ \label{noisecircles+}
+\end{figure}
 
 
 \chapter{Conclusioni}
