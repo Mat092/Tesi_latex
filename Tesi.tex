@@ -260,11 +260,20 @@ Per questo ogni operatore è stato adattato per fare in modo che sia possibile e
 \subsection{Crossover}
 
 Il Crossover si differenzia da quello di un algoritmo genetico in cui la lunghezza di ogni cromosoma sia prestabilita. 
-Infatti, è facile che i due genitori selezionati non abbiano lo stesso numero di hidden layer: in questo caso non è possibile ''tagliare'' il cromosoma nello stesso punto (come mostrato nel capitolo \ref{alg-gen}).
+Infatti, è facile che i due genitori selezionati non abbiano lo stesso numero di hidden layer: in questo caso non è possibile "tagliare" il cromosoma nello stesso punto (come mostrato nel capitolo \ref{alg-gen}).
 Inoltre è necessario che la lunghezza dei figli possa essere diversa da quella dei genitori in modo da non limitare le possibilità di esplorazione.
 
-Seguendo questi propositi, vengono scelti casualmente due punti di taglio, uno per genitore, dalla mediana di tre interi casuali (questo per fare in modo che la lunghezza non cambi troppo tra una generazione e la successiva, come mostrato in figura).
+Seguendo questi propositi, vengono scelti casualmente due punti di taglio, uno per genitore, dalla mediana di tre interi casuali (questo per fare in modo che la lunghezza non cambi troppo tra una generazione e la successiva, come mostrato in figura \ref{median}).
 Dopodiché il crossover procede come in un classico algoritmo genetico, ossia restituendo due figli combinazione delle parti tagliate.
+
+\begin{figure}[H]
+ \centering
+ \includegraphics[scale = 0.5]{images/median-3}
+ \includegraphics[scale = 0.5]{images/median-5}
+ \caption{\textit{In figura viene mostrato il risultato di 10000 estrazioni di 3 (a sinistra) e 5 (a destra) interi casuali dai quali viene estratta la mediana. Aumentando il numero di numeri casuali da cui estrarre la mediana il picco si stringe e si alza }}
+ \label{median}
+\end{figure}
+
 
 Un esempio di funzionamento, scelti i genitori:
 
@@ -542,19 +551,19 @@ I risultati più interessanti provengono dal dataset \textit{Circles+}, ideato c
 
 \begin{figure}[H]
  \centering
- \includegraphics[scale = 0.35]{images/circle+-rnd-log./1}
- \includegraphics[scale = 0.35]{images/circle+-rnd-log./2}
- \includegraphics[scale = 0.35]{images/circle+-rnd-log./3}
- \includegraphics[scale = 0.35]{images/circle+-rnd-log./4}
+ \includegraphics[scale = 0.37]{images/circle+-rnd-log./1}
+ \includegraphics[scale = 0.37]{images/circle+-rnd-log./2}
+ \includegraphics[scale = 0.37]{images/circle+-rnd-log./3}
+ \includegraphics[scale = 0.37]{images/circle+-rnd-log./4}
  \\
- \includegraphics[scale = 0.35]{images/circle+-rnd-log./5}
- \includegraphics[scale = 0.35]{images/circle+-rnd-log./6}
- \includegraphics[scale = 0.35]{images/circle+-rnd-log./7}
- \includegraphics[scale = 0.35]{images/circle+-rnd-log./8}
+ \includegraphics[scale = 0.37]{images/circle+-rnd-log./5}
+ \includegraphics[scale = 0.37]{images/circle+-rnd-log./6}
+ \includegraphics[scale = 0.37]{images/circle+-rnd-log./7}
+ \includegraphics[scale = 0.37]{images/circle+-rnd-log./8}
  \\
- \includegraphics[scale = 0.35]{images/circle+-rnd-log./9}
- \includegraphics[scale = 0.35]{images/circle+-rnd-log./10}
- \includegraphics[scale = 0.35]{images/circle+-rnd-log./11}
+ \includegraphics[scale = 0.37]{images/circle+-rnd-log./9}
+ \includegraphics[scale = 0.37]{images/circle+-rnd-log./10}
+ \includegraphics[scale = 0.37]{images/circle+-rnd-log./11}
  \caption{\textit{L'immagine mostra una run d'esempio nel dataset circles+ usando la log loss}}
  \label{circles+2}
 \end{figure}
@@ -562,17 +571,27 @@ I risultati più interessanti provengono dal dataset \textit{Circles+}, ideato c
 In questo caso la convergenza è molto simile nelle due funzioni di fitness.
 In entrambi i casi è possibile osservare un'evoluzione più lenta rispetto ai primi due dataset.
 
+\newpage
+
 \section{Complessità della rete} 
 
-I parametri importanti da considerare nella costruzione di una rete sono la sua profondità, il numero di connessioni interne che produce e il \textit{layer} con meno neuroni, che ci danno una misura di quanta informazione può contenere e quanto è possibile comprimerla.
-In questo algoritmo non è stata impostata alcuna penalità per individui con troppi \textit{layer} o troppi \textit{link}, per cui esiste la possibilità che non converga mai ad un risultato finale, costruendo reti sempre più profonde e precise nel separare i dati.
-In realtà ciò non sembra avvenire nei casi visionati fino ad ora, ossia quando le due classi non sono perfettamente separabili. 
+I parametri importanti da considerare nel valutare la complessità di una rete sono:
+
+\begin{enumerate}
+ \item[-] Collegamenti
+ \item[-] Numero di neuroni del layer con più piccolo
+ \item[-] Numero di \textit{Hidden Layer}
+\end{enumerate}
+
+Questi ci danno una misura di quanta informazione può contenere e quanto è possibile comprimerla.
+Nell'algoritmo genetico non è stata impostata alcuna penalità in relazione alla complessità della rete,l'obiettivo infatti non è stato quello di trovare la rete più performante, quindi esiste la possibilità che non converga mai ad un risultato finale, costruendo reti sempre più profonde e precise nel separare i dati.
+In realtà ciò non è osservato nei casi visionati fino ad ora, ossia quando le due classi non sono perfettamente separabili. 
 Inoltre, come già accennato, per la funzione di fitness \textit{accuracy score} non può succedere perchè prima o poi l'algoritmo convergerà ad una soluzione con score pari a $100$\textdiscount, di fatto insuperabile.
 
 La situazione è diversa per la \textit{log loss} che invece ha un limite inferiore asintotico. 
 Per questo motivo è stato studiato il comportamento dell'algoritmo con questa funzione di fitness al variare della separabilità dei dati, quantificata dal \textit{noise} dei rispettivi dataset. 
 
-L'obiettivo è quindi quello di studiare l'andamento di questi parametri in funzione del noise dei dataset.
+L'obiettivo è quindi quello di studiare l'andamento di questi parametri in funzione del \textit{noise } dei dataset.
 
 In figura \ref{noisemoons} sono mostrati i dati relativi al dataset \textit{moons}:
 
