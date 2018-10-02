@@ -420,7 +420,7 @@ In questo capitolo verranno presentati i dati ottenuti confrontando le  metodolo
 
 La prima parte dei risultati si concentra nell'analisi delle prestazioni dell'algoritmo nel evolvere una popolazione di reti in grado di separare due classi di punti nei tre dataset presentati in precedenza. Verranno analizzate le prestazioni dei due algoritmi di selezione insieme ai due tipi di funzione di fitness.
 
-\subsection{Dataset Moons}
+\subsection{Moons Dataset}
 
 Il primo dataset su cui è stato testato l'algoritmo è \textit{moons}, nelle immagini successive vengono riportati alcuni esempi di run effettute, differenziando \textit{Accuracy score} e \textit{log loss}, cioè i due diversi tipi di \textit{fitness function}, e i due algoritmi di selezione, che sono \textit{random mate} e \textit{all sons}.
  
@@ -521,13 +521,12 @@ Anche in questo caso l'accuracy score mostra una convergenza dell'algoritmo molt
 
 Come per il precedente dataset, questa funzione di fitness sembra riportare una classificazione più precisa, come mostrato in figura \ref{circles2}.
 
-\newpage
 
-\section{Circles+ Dataset}
+\subsection{Circles+ Dataset}
 
 I risultati più interessanti in termini di evoluzione della popolazione provengono dal dataset \textit{Circles+}, ideato come "stress test" per l'algoritmo. Nelle figure \ref{circles+1} e \ref{circles+2} vengono riportati i dati di classificazione.
 
-\subsection{\textit{Accuracy score}}
+In figura \ref{circles+1} è riportata una classificazione d'esempio utilizzando l'\textit{accuracy score functions}:
 
 \begin{figure}[H]
  \centering
@@ -546,7 +545,7 @@ I risultati più interessanti in termini di evoluzione della popolazione proveng
  \label{circles+1}
 \end{figure}
 
-\subsection{\textit{Logarithmic loss}}
+Infine viene mostrata una run d'esempio utilizzando la \textit{logarithmic loss function}.
 
 \begin{figure}[H]
  \centering
@@ -594,27 +593,61 @@ Per questo motivo è stato studiato il comportamento dell'algoritmo con questa f
 
 L'obiettivo è quindi quello di studiare l'andamento di questi parametri in funzione del \textit{noise } dei dataset.
 
-\newpage
+\subsection{Moons Dataset}
 
-In figura \ref{noisemoons} sono mostrati i dati relativi al dataset \textit{moons}:
+Iniziamo con il presentare i dati relativi all'andamento del fitness delle reti in funzione del noise introdotto nel dataset \textit{moons} in figura \ref{score_moons}.
+
+\begin{figure}[H]
+ \centering
+ \includegraphics[scale = 0.5]{images/score_noise_moons.png}
+ \caption{\textit{Nel grafico viene mostrato l'andamento dello score in funzione del noise del dataset. In evidenza alcuni punti interessanti dell'andamento}}
+ \label{score_moons}
+\end{figure}
+
+Nel dataset \textit{moons} lo score non risulta sensibile ai cambiamenti del noise e rimane prossimo a 0 (per la \textit{logloss} uno score migliore rappresenta un fitness maggiore) fino a che la run raggiunge noise = 0.2: probabilmente questo è il valore in cui i punti non sono più perfettamente separabili.
+Il grafico non sembra mostrare un andamento di saturazione per alti livelli di noise, ciò significa che nonostante le reti ancora riescono a distinguere alcuni punti rossi e blu.
+
+
+Di seguito verranno mostrati gli andamenti delle grandezze scelte come rappresentative della complessità della rete.
 
 \begin{figure}[H]
  \centering
  \includegraphics[scale = 0.5]{images/links_noise_moons}
+ \includegraphics[scale = 0.5]{images/Links_Score_moons}
+ \caption{\textit{A confronto gli andamenti del numero di collegamenti in funzione del noise ed in funzione dello score}}
+ \label{linksmoons}
+\end{figure}
+
+In figura \ref{linksmoons} viene mostrato l'andamento dei collegamenti della rete in funzione del noise e del fitness.
+
+Nel primo grafico si nota un andamento fortemente decrescente anche nel range di valori di noise in cui lo score del dataset è costante a 0. Aumentando ancora il noise l'andamento si stabilizza rimanendo comunque decrescente. Se per \textit{noise} prossimi allo zero la rete raggiunge un numero di collegamenti elevato (5000 collegamenti in media per noise = 0), questo crolla quando il noise raggiunge certi valori e continua a decrescere poi.
+
+Nel secondo grafico si nota una rapida divergenza nel numero di links avvicinandosi a valori di score  prossimi a 0: se l'algoritmo riesce a classificare molto bene il dataset allora tende a cercare reti con un numero di collegamenti più elevato.
+
+Nella figura successiva, la \ref{smallmoons}, verrà presentato l'andamento del numero di neuroni nel layer più piccolo della rete in funzione del noise e dello score.
+
+\begin{figure}[H]
+ \centering
  \includegraphics[scale = 0.5]{images/small_noise_moons}
+ \includegraphics[scale = 0.5]{images/small_Score_moons}
+ \caption{\textit{Nei due grafici sono mostrati gli andamenti del numero di neuroni nel layer più piccolo della rete in funzione del noise di moons e dello score}}
+ \label{smallmoons}
+\end{figure}
+
+In questo dataset, il numero di neuroni del layer più piccolo della rete mostra un andamento costante sia in funzione del noise e sia in funzione dello score. 
+
+\begin{figure}[H]
+ \centering
  \includegraphics[scale = 0.5]{images/depth_noise_moons}
- \caption{\textit{Studio dell'andamento del numero di links(a sinistra), del layer più piccolo(a destra) e della profondità della rete (in basso) in funzione del noise per il dataset moons. In evidenza i punti di noise che mostrano andamenti interessanti(rispettivamente 0.1,0.2 e 0.2)}}
+ \includegraphics[scale = 0.5]{images/depth_Score_moons}
+ \caption{\textit{Studio dell'andamento del numero della profondità della rete in funzione del noise e dello score per il dataset moons. In evidenza i punti di noise che mostrano andamenti interessanti(rispettivamente 0.1,0.2 e 0.6)}}
  \label{noisemoons}
 \end{figure}
 
-\paragraph{Links} (in alto a sinistra) a differenza di quanto atteso, ad un dataset più difficile non corrisponde una rete più complessa. 
-Se per \textit{noise} prossimi allo zero la rete raggiunge un numero di collegamenti elevato (5000 collegamenti in media per noise = 0), questo crolla quando il noise raggiunge certi valori e continua a decrescere poi.
+Come per i link, anche in questo l'andamento della profondità in funzione del Noise è fortemente decrescente anche se sembra mostrare un accentuato plateau nel range di noise da 0.3 fino a noise = 0.6.
+La lunghezza delle reti avvicinandosi a score molto bassi tende a divergere, proprio come il numero di collegamenti.
 
-\paragraph{Smaller Layer}: (in alto a destra) il numero di neuroni del layer più piccolo sembra rimanere costante.
-
-\paragraph{Profondità} (in basso) anche il numero di \textit{hidden layers} della soluzione seguono un andamento simile ai collegamenti, con la differenza che sembra mostrare un plateu nel range di noise = [0.3;0.5].
-
-Vengono riportate in figura \ref{exnoisemoons} alcuni esempi di come si mostra un classificazione efettuta a diversi livelli di noise per \textit{moons}.
+Vengono riportate di seguito in figura \ref{exnoisemoons} alcuni esempi di come si mostra un classificazione effettuta a diversi livelli di noise per \textit{moons}.
 Le reti che hanno effetuato tali classificazione sono[17, 20, 24, 23, 24, 26, 20, 24, 23, 24, 26, 17, 9, 14, 6],[7, 12, 13, 24, 22], [24, 23, 13] e [6, 21]
 
 \begin{figure}[H]
@@ -629,26 +662,64 @@ Le reti che hanno effetuato tali classificazione sono[17, 20, 24, 23, 24, 26, 20
 
 In figura \ref{exnoisemoons} sono mostrati 3 momenti significativi del dataset: prima della presunta transizione, quando i punti sono ancora perfettamente separabili, durante la transizione a noise = 0.2 quando i punti iniziano a mischiarsi e a  non essere più separabili dalla rete e infine a noise = 0,6, ben oltre la transizione, quando i punti sono definitavemente impossibili da separare se non approssimativamente.
 
-\newpage
 
-Il secondo dataset analizzato è \textit{circles}, in figura \ref{noisecircles} vengono mostrati i dati ottenuti:
+\subsection{Circles Dataset}
+
+Il secondo dataset analizzato è \textit{circles}, di seguito vengono mostrati i dati ottenuti:
+In figura \ref{score_circles} viene mostrato l'andamento dello score in funzione del noise del dataset.
+
+\begin{figure}[H]
+ \centering
+ \includegraphics[scale = 0.5]{images/score_noise_circles.png}
+ \caption{\textit{Nel grafico viene mostrato l'andamento dello score in funzione del noise del dataset. In evidenza alcuni punti interessanti dell'andamento}}
+ \label{score_circles}
+\end{figure}
+
+Notiamo che anche per \textit{circles} esiste una zona di classificazione perfetta in cui lo score sembra indipendente rispetto al noise al dataset.
+Inoltre, a differenza di \textit{moons}, qui lo score sembra raggiungere un livello di saturazione, simbolo del fatto che raggiunto un certo noise, i punti blu e rossi sono impossibili da separare per la rete. 
+
+Di seguito sono presentati i grafici delle tre grandezze che caratterizzano la complessità della rete per il dataset \textit{circles}:
 
 \begin{figure}[H]
  \centering
  \includegraphics[scale = 0.5]{images/links_noise_circles}
- \includegraphics[scale = 0.5]{images/small_noise_circles}
- \includegraphics[scale = 0.5]{images/depth_noise_circles}
- \caption {\textit{Studio dell'andamento del numero di links(a sinistra), del layer più piccolo (a destra) e della profondità della rete (in basso) in funzione del noise per il dataset circles, in evidenza alcuni punti di noise interessanti.}}
- \label{noisecircles}
+ \includegraphics[scale = 0.5]{images/Links_Score_circles}
+ \caption{\textit{Andamento dei collegamenti delle reti in funzione di noise e score}}
+ \label{link-circles}
 \end{figure}
 
-\paragraph{Links} (in alto a sinistra) vediamo che il numero di link è in rapida discesa all'aumentare del noise fino a stabilizzarsi quando i due cerchi sono indistinguibili. Si nota un plateau in corrispondenza dei valori di noise = 0.2 
+In figura \ref{link-circles} vengono mostrati gli andamenti dei link in funzione del rumore del dataset ed in funzione dello score ottenuto dalla rete di convergenza.
+Vediamo che il numero di link tende a decrescere rapidamente nonostante nel range di noise [0;0.1] lo score della classificaziione sia costante. A differenza che nel caso di \textit{moons} il numero di collegamenti sembra convergere.
+Si nota un plateau intorno a valori di noise = 0.2.
 
-\paragraph{Smaller Layer} (in alto a destra) in questo caso il numero di neuroni nel layer più piccolo diminuisce all'aumentare del rumore.
+Nel secondo grafico invece osserviamo ancora una volta una divergenza per score bassi e quindi buone classificazioni, mentre un andamento molto rumoroso intorno ad un noise = 0.6
 
-\paragraph{Profondità} (in basso) l'andamento è ancora una volta discedente e presenta un plateau attorno a valore di noise = 0.2.
+In figura \ref{small-circles} vengono mostrati gli andamenti relativi al numero di neuroni con layer più piccolo nella rete: 
 
-In figura \ref{exnoisecircles} sono raffigurati 4 esempi di classificazione di \textit{circles} a livelli diversi di noise. Le reti che hanno compiuto queste classificazioni sono rispettivamente [16, 24, 24, 20, 24, 23, 24, 24, 23, 22, 24, 14, 24, 16, 14, 20], [19, 22, 19, 5, 14], [18, 24, 18, 10] e [2]:
+\begin{figure}[H]
+ \centering
+ \includegraphics[scale = 0.5]{images/small_noise_circles}
+ \includegraphics[scale = 0.5]{images/small_Score_circles}
+ \caption{\textit{Andamento dello smaller layer in funzione di noise e score.}}
+ \label{small-circles}
+\end{figure}
+
+Notiamo un andamento decrescente nel numero di neuroni del layer più piccolo a differenza di quanto osservato per il precedente dataset.
+Ancora una volta la parte per score più alti e classificazioni peggiori risulta molto rumorosa per questo dataset.
+
+In figura \ref{depth_circles} vengono riportati i dati ottenuti sulla profondità della rete in funzione di noise e score.
+
+\begin{figure}[H]
+ \centering
+ \includegraphics[scale = 0.5]{images/depth_noise_circles}
+ \includegraphics[scale = 0.5]{images/depth_Score_circles}
+ \caption {\textit{In figura viene mostrato l'andamento della profondità delle reti in funzione del noise e dello score}}
+ \label{depth_circles}
+\end{figure}
+
+Gli andamenti appaiono simili a quelli osservati per i link nello stesso dataset.
+
+In figura \ref{exnoisecircles} sono raffigurati 4 esempi di classificazione di \textit{circles} a livelli diversi di noise. Le reti che hanno compiuto queste classificazioni sono rispettivamente [16, 24, 24, 20, 24, 23, 24, 24, 23, 22, 24, 14, 24, 16, 14, 20], [19, 22, 19, 5, 14] e [18, 24, 18, 10]:
 
 \begin{figure}[H]
  \centering
@@ -663,26 +734,51 @@ In figura \ref{exnoisecircles} sono raffigurati 4 esempi di classificazione di \
 I tre esempi mostrano bene il cambiamento che compie il dataset durante la prova.
 Notiamo inoltre come l'algoritmo dopo un certo noise non riesca più a classificare efficacemente il dataset.
 
-\newpage
+\subsection{Circles+ Dataset}
 
-Il terzo ed ultimo dataset è \textit{circles+}
+Terzo ed ultimo dataset presentato è \textit{circles+} che combina due dataset \textit{circles}.
+Nel grafico in figura \ref{score-circles+} viene mostrato l'andamento del fitness della rete di convergenza in funzione del noise del dataset.
+
+\begin{figure}[H]
+ \centering
+ \includegraphics[scale = 0.5]{images/score_noise_circles+}
+ \caption{\textit{Andamento dello score in funzione del noise per il dataset circles+}}
+ \label{score-circles+}
+\end{figure}
+
+Anche in questo caso si nota un range di noise per cui lo score della classificazione rimane costante a 0(più ristretto di quelli precedenti) e infine si nota un valore di saturazione per lo score.
+
+In figura \ref{links-score-circle+} sono comparati gli andamenti dei link in funzione di noise e score:
 
 \begin{figure}[H]
  \centering
  \includegraphics[scale = 0.5]{images/links_noise_circles+}
- \includegraphics[scale = 0.5]{images/small_noise_circles+}
- \includegraphics[scale = 0.5]{images/depth_noise_circles+}
- \caption{\textit{Studio dell'andamento del numero di links(a sinistra), del layer più piccolo(a destra) e della profondità della rete (in basso) in funzione del noise per il dataset circles+, in evidenza alcuni valori significativi di noise: prima della transizione, durante un' andamento anomalo e dopo la transizione.}}
- \label{noisecircles+}
+ \includegraphics[scale = 0.5]{images/Links_Score_circles+}
+ \caption{\textit{Andamento dei links in funzione del noise del dataset e dello score ottenuto  }}
+ \label{links-score-circle+}
 \end{figure}
 
-\paragraph{Links} (in alto a sinistra) il numero di link diminuisce rapidamente con l'aumentare del noise,sino a stabilizzarsi. 
-Si nota una discontinuità in un range di noise = [0.1,0.3] 
+L'andamento del grafico dei links in funzione del noise è simile a quelli precedenti ma presenta uno \textit{spike} intorno al valore di noise =  0.2. Come per circle, sembra convergere ad un valore stabile.
 
-\paragraph{Smaller layer} (in alto a destra) anche in questo dataset il numero di neuroni nel layer più piccolo diminuisce all'aumentare della complessità del dataset.
+\begin{figure}[H]
+ \centering
+ \includegraphics[scale = 0.5]{images/small_noise_circles+}
+ \includegraphics[scale = 0.5]{images/small_Score_circles+}
+ \caption{\textit{Andamento del numero di neuroni nel layer più piccolo in funzione del noise e dello score ottenuto}}
+ \label{small-score-circle+}
+\end{figure}
 
-\paragraph{Profondità} la lunghezza della rete diminuisce rapidamente fino a stabilizzarsi ad un valore di noise = 0.4.
-Anche qui si vede un andamento particolare in corrispondenza di valori di noise = [0.2,0.3].
+Come per il dataset \textit{circle} anche qui, osserviamo che il numero di neuroni nel layer minore diminusce all'aumentare del noise.
+
+\begin{figure}[H]
+ \centering
+ \includegraphics[scale = 0.5]{images/depth_noise_circles+}
+ \includegraphics[scale = 0.5]{images/depth_Score_circles+}
+ \caption{\textit{Andamento della profondità in funzione del noise e dello score ottenuto }}
+ \label{depth-score-circle+}
+\end{figure}
+
+Anche in questo caso, l'andamento della lunghezza in funzione del noise è molto simile all'andamento del numero di links.
 
 In figura \ref{exnoisecircles+} vengono mostrati degli esempi di classificazione con diversi valori di noise.
 Le reti alle quali l'algoritmo converge in questi casi sono rispettivamente: [24, 21, 20, 21, 20, 21, 4, 14, 21, 24, 6, 21], [22, 24, 24, 12] e []
@@ -697,7 +793,7 @@ Le reti alle quali l'algoritmo converge in questi casi sono rispettivamente: [24
 \end{figure}
 
 Nel caso di \textit{circles+} si raggiunge in fretta un livello di noise tale da rendere impossibile all'algoritmo una classificazione anche approssimativa del dataset, tuttavia è ancora possibile ottenre una classificazione accurata per noise = 0.1
-È facile immaginare che le classificazioni per noise > 0,4 non siano molto diverse da quella mostrata.
+È facile immaginare che le classificazioni per noise > 0,6 non siano molto diverse da quella mostrata.
 
 \chapter{Conclusioni}
 
