@@ -594,8 +594,8 @@ Infine viene mostrata una run d'esempio utilizzando la \textit{logarithmic loss 
 
 In questo caso la convergenza è molto simile nelle due funzioni di fitness.
 In entrambe le simulazioni è possibile osservare un'evoluzione più lenta rispetto ai primi due dataset.
-In particolare questa evoluzione inizia da una popolazione casuale che non riconosce (pen nulla o in parte) il cerchio interno di punti di colore rosso ma avanzando nelle generazioni questo gruppo interno viene correttamente classificato. 
-Dopodichè in entrambe i casi l'evoluzione porta ad un miglioramento della precisione della separazione fino alla convergenza.
+In particolare questa evoluzione inizia da una popolazione casuale che non riconosce (per nulla o in parte) il cerchio interno di punti di colore rosso ma avanzando nelle generazioni questo gruppo interno viene correttamente classificato. 
+Dopodichè in entrambi i casi l'evoluzione porta ad un miglioramento della precisione della separazione fino alla convergenza, la quale risulta 
 
 \newpage
 
@@ -824,7 +824,18 @@ Nel caso di \textit{circles+} si raggiunge in fretta un livello di noise tale da
 \chapter{Conclusioni}
 
 In questo capitolo verranno discussi i principali risultati presentati nel capitolo precedente.
-Iniziamo con l'analizzare la classificazione dell'algoritmo 
+La separazione compiuta dall'algoritmo sui dataset composti da due classi di punti sembra essere buona sotto una certa soglia di rumore e ciò vale sia per l'\textit{accuracy score} sia per la \textit{logarithmic loss}, nonostante esistano delle nette differenze tra le due in capacità di classificazione, almeno per quanto osservato nei dataset \textit{circles} e \textit{moons}, nei quali la seconda risulta più precisa e meno approssimativa. 
+Nel terzo dataset invece il comportamento sembra simile anche se, ancora una volta, la \textit{log loss} raggiunge un risultato più preciso se si considerano le zone di bordo tra punti rossi e blu. 
+In generale, possiamo dire che per quanto riguarda questi semplici casi di classificazione di punti l'algoritmo riesce a trovare un individuo in grado di compiere una separazione più o meno netta (ciò dipende dal noise) nonostante lo spazio di ricerca sia molto vasto, ottenendo risultati migliori se invece di considerare la semplice risposta binaria della rete (blu/rosso) si considera la sicurezza con la quale la rete attribuisce tale risposta e si cerca di massimizzare tale certezza.
+Naturalmente ciò non significa che l'MLP restituito dalla convergenza dell'algoritmo sia il migliore in termini di classificazione o semplicemente in termini di costo computazionale, sia per il suo addestramento sia nel calcolare la sua risposta, che in caso di problemi complessi rappresenta sicuramente un problema. 
+Per questo si è voluto analizzare anche la complessità della rete, quantificandola in tre parametri: Link, Numero di hidden layer (profondità o lunghezza) e numero di neuroni nel layer più piccolo.
+Ricordando che non esiste nell'algoritmo genetico nessuna forma di penalità per reti troppo "grandi", sembra scontato affermare che in qualsiasi caso l'algoritmo tenderà a preferire un numero molto grande di hidden layer aumentandolo di generazione in generazione dato che in generale reti di questo tipo dovrebbe avere performance di classificazione migliore.
+In realtà ciò accade solo nel caso di rumore molto basso o nullo: diminuendolo infatti in tutti e tre i dataset la lunghezza e il numero di link della rete crescono molto rapidamente, il che sembra rappresentare un comportamento totalmente anti-intuitivo. 
+
+In altre parole la complessità della rete aumenta al diminuire della complessità del dataset: questa caratteristica potrebbe essere dovuta ad una sorta di penalizzazione interna all'addestramento degli MLP.
+Infatti, la separazione tra \textit{train set} e \textit{test set} fa in modo che le reti che ottengono alti score sul primo (\textit{overfitting}) vengano in seguito penalizzate sul secondo.
+
+Questo si osserva su noise elevati ed in tutti e tre i casi sembra esistere un valore di soglia oltre il quale 
 
 \listoffigures
 
