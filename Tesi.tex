@@ -94,7 +94,6 @@ Anno Accademico \textcolor{black}{ 2017/2018}
 \tableofcontents
 %\clearpage{\pagestyle{empty}\cleardoublepage}1
 
-
 \chapter{Introduzione}
 
 In questo capitolo si introdurranno i principali mezzi utilizzati nello svolgimento del progetto di tesi, ossia Algoritmi Genetici per la ricerca dei minimi di una funzione non parametrica e Reti Neurali \textit{fully connected}, che svolgono il ruolo di funzione a molti parametri da ottimizare in un problema di classificazione.
@@ -134,17 +133,9 @@ Il funzionamento di un tipico algoritmo genetico,come descritto da \cite{genetic
 
 Ogni iterazione di questo processo è chiamata \textit{generazione}.
 
-\subsection{Applicazioni}
-
 Il classico esempio di utilizzo di un algoritmo genetico è la ricerca dei massimi di una funzione.
 In tal caso, un individuo è rappresentato da una stringa di bit, la \textit{funzione di fitness} è la funzione stessa e il \textit{fitness} delle soluzioni è il valore della funzione calcolato nel punto di cui l'individuo è la rappresentazione binaria.
-Oltre ad essere l'esempio più semplice risulta anche quello più significativo: di fatto lo scopo di un algoritmo genetico è ottimizzare.
-\\
-Da migliorare
-
-\subsection{Drift genetico}
-
-posso scrivere qualcosa su questo visto che viene osservato.
+Oltre ad essere l'esempio più semplice risulta anche quello più significativo: di fatto lo scopo di un algoritmo genetico è l'ottimizzazione.  
 
 \section{Reti Neurali}
 
@@ -231,15 +222,45 @@ La struttura di una rete neurale \textit{fully connected} composta da molti \tex
 In una rete come questa ad ogni collegamento è associato un peso e ad ogni nodo è associato un \textit{bias}: gli output dei \textit{neuroni} del \textit{layer} di input diventano a loro volta valori in ingresso del \textit{layer} successivo in un procedimento a catena fino all'ultimo \textit{layer}, che restituisce la risposta della rete. 
 L'addestramento della rete consiste nel valutarne gli output in un determinato set di dati, chiamato \textit{training dataset}, confrontarli con i valori attesi, forniti dallo stesso \textit{dataset}, e modificare pesi e \textit{bias} in modo che la risposta si avvicini a ciò che ci si aspetta.
 
+L'algoritmo di addestramento più utilizzato è la \textit{Backpropagation}, che è la modalità utilizzata per i \textit{Multy Layer Perceptron} in questa prova.
 
-Da completare con accenno a BackPropagation
+L'idea su cui si basa è di valutare l'errore commesso da ogni output della rete, dopo un' inizializzazione casuale dei pesi, in base all'output atteso e di retro propagare lungo la rete gli scarti per aggiornare il valore dei pesi \cite{backprop}.
+Indicando con:
 
-\subsection{Evoluzione di una Rete Neurale}
+\begin{enumerate}
+ \item[-] $t_{k}$: risultato atteso al $k$-esimo output;
+ \item[-] $y_{k}$: risultato ottenuto al $k$-esimo output;
+ \item[-] $w$: peso generico;
+ \item[-] $W$: l'insieme dei pesi.
+\end{enumerate}
+
+L'errore commesso dal $k$-esimo output è stimato da:
+
+\begin{equation}
+ \centering
+ E_{k} = (t_{k}-y_{k})
+\end{equation}
+
+Da cui possiamo definire la funzione d'errore come:
+
+\begin{equation}
+ \centering
+ J(W) = \sum_{k = 1}^{N}\frac{1}{2}E_{k}^2 = \sum_{k = 1}^{N}\frac{1}{2}(t_{k}-y{k})^2
+\end{equation}
+
+Si procede poi nel correggere i pesi partendo dall'output fino all'input nel modo seguente:
+
+\begin{equation}
+ \centering
+ w = w + \delta w = w + \eta \frac{\partial J}{\partial w}
+\end{equation}
+
+dove $\eta$ è una costante che garantisce un'opportuna convergenza ai pesi. 
+Lo scopo è quello di trovare un minimo alla funzione d' errore. \cite{backprop}
 
 \chapter{Metodologia}
 
-In questo capitolo verranno descritti i metodi utilizzati per l'ottimizzazione di una rete neurale \textit{fully connected} attraverso un algoritmo genetico: l' obiettivo è quello di evolvere la struttura degli \textit{hidden layer} della rete al fine di classificare al meglio 
-un dataset separato in due classi di dati.
+In questo capitolo verranno descritti i metodi utilizzati per l'ottimizzazione di una rete neurale \textit{fully connected} attraverso un algoritmo genetico: l' obiettivo è quello di evolvere la struttura degli \textit{hidden layer} della rete al fine di classificare al meglio un dataset separato in due classi di dati.
 
 \section{Popolazione di reti neurali}
 
@@ -260,13 +281,13 @@ Infatti, è facile che i due genitori selezionati non abbiano lo stesso numero d
 Inoltre è necessario che la lunghezza dei figli possa essere diversa da quella dei genitori in modo da non limitare le possibilità di esplorazione.
 
 Seguendo questi propositi, vengono scelti casualmente due punti di taglio, uno per genitore, dalla mediana di tre interi casuali (questo per fare in modo che la lunghezza non cambi troppo tra una generazione e la successiva, come mostrato in figura \ref{median}).
-Dopodiché il crossover procede come in un classico algoritmo genetico, ossia restituendo due figli combinazione delle parti tagliate.
+Dopodiché il crossover procede come in un classico algoritmo genetico, ossia restituendo due figli, combinazione delle parti tagliate.
 
 \begin{figure}[H]
  \centering
  \includegraphics[scale = 0.7]{images/median-3-5}
  %\includegraphics[scale = 0.5]{images/median-5}
- \caption{\textit{In figura viene mostrato il risultato di 100000 estrazioni di serie da 3(in nero) e 5(in blu) interi casuali (da 1 a 100) dalle quali viene estratta la mediana. Aumentando il numero di numeri casuali da cui estrarre la mediana, il picco si stringe e si alza al centro}}
+ \caption{\textit{In figura viene mostrato il risultato di 100000 estrazioni di serie da 3(in nero) e 5(in blu) interi casuali (da 1 a 100) dalle quali viene estratta la mediana. Aumentando il numero di numeri casuali da cui estrarre la mediana, il picco si stringe e si alza al centro. In viola un'estrazione uniforme.}}
  \label{median}
 \end{figure}
 
@@ -335,14 +356,19 @@ L'\textit{accuracy score} viene massimizzato nell'algoritmo.
 \end{equation}
 Dove $y_{t}$ è la classe dell'oggetto (o $0$ o $1$ ), mentre $y_{p}$ è la probabilità stimata che l'oggetto sia di quella classe.
 
-Non è stata attribuita nessuna forma di penalità alla profondità delle retio o ,più in generale, a quanti collegamenti  che potrebbero quindi diventare sempre più grandi e computazionalmente pesanti da gestire, ma verrà studiato in seguito come si comportano queste grandezze (numero di collegamenti e lunghezza). 
+Non è stata attribuita nessuna forma di penalità alla profondità delle reti o ,più in generale, a quanti collegamenti essa forma, che potrebbero quindi diventare sempre più grandi e computazionalmente pesanti da gestire, ma verrà studiato in seguito come si comportano queste grandezze (numero di collegamenti e lunghezza). 
+
+Ogni MLP viene addestrato e valutato su due sezioni diverse del dataset: \textit{train set} e \textit{test set}.
+Entrambe rappresentano una frazione dell'intero dataset scelta casualmente, in particolare sono rispettivamente l'80\textdiscount e il \textdiscount del dataset.
+Nel \textit{train set} l'MLP viene addestrato mentre nel \textit{test set} viene valutato e gli viene attribuito uno score sulla base di questo risultato. 
+Questa separazione serve per evitare l'\textit{overfitting} delle reti e in seguito verrà discusso come l'unico tipo di penalità che una rete molto complessa possa subire.
 
 \section{Datasets}
 
 I set di dati sono artificiali e forniti da \textit{scikit learn}. 
 Sono stati usati per le prove 3 tipi di dataset:
 
-\paragraph{moons} I punti rossi e blu vengono generati a forma di semicerchi, come mostrato in figura \ref{moons} 
+\paragraph{moons} I punti rossi e blu vengono generati a forma di "semicerchi", come mostrato in figura \ref{moons} 
 
 \begin{figure}[H]
  \centering
@@ -797,13 +823,14 @@ Nel caso di \textit{circles+} si raggiunge in fretta un livello di noise tale da
 
 \chapter{Conclusioni}
 
-In questo capitolo verranno discussi i principali risultati presentati nel capitolo precedente
+In questo capitolo verranno discussi i principali risultati presentati nel capitolo precedente.
+Iniziamo con l'analizzare la classificazione dell'algoritmo 
 
 \listoffigures
 
 \nocite{*}
 \addcontentsline{toc}{chapter}{Bibliografia}
-\bibliographystyle{plainnat}
+\bibliographystyle{unsrt}
 \bibliography{Bibliografia.bib}
 
 
