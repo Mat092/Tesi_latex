@@ -96,18 +96,35 @@ Anno Accademico \textcolor{black}{ 2017/2018}
 
 \chapter{Introduzione}
 
-In questo capitolo si introdurranno i principali mezzi utilizzati nello svolgimento del progetto di tesi, ossia Algoritmi Genetici per la ricerca dei minimi di una funzione non parametrica e Reti Neurali \textit{fully connected}, che svolgono il ruolo di funzione a molti parametri da ottimizare in un problema di classificazione.
+
+
+Il progetto di tesi presentato ha come obiettivo verificare la possibilità di evolvere la struttura di una rete neurale attraverso un algoritmo genetico in modo da automatizzarne il processo di costruzione, che ad oggi consiste in un procedimento di "\textit{trial and error}".
+Le reti verranno valutate nella separazione di due classi di punti in dataset artificiali semplici per verificare la bontà dell'algoritmo. 
+Dopodiché lo studio si concentrerà sull'analisi del come e quando la rumorosità dei dati influenzi la complessità della rete ottenuta dall'algoritmo genetico.
+
+In questo capitolo verranno presentati i principali concetti teorici essenziali alla comprensione delle Metodologie applicate, tra i quali naturalmente la base di un algoritmo genetico e di rete neurale.
+
+Il secondo capitolo include la spiegazione di come questi concetti siano stati adattati nel caso presentato ed in particolare come vengano implementati algoritmi genetici e reti neurali, cosa si intenda per "individuo" e "popolazione", quali dataset siano stati utilizzati e come venga effettuata la presa e l'analisi dati.
+
+Nel terzo capitolo vengono presentati i risultati separati in una parte di valutazione della capacità di classificazione dell'algoritmo e nella seconda parte, in cui vengono mostrati i risultati relativi alla struttura della rete in funzione della rumorosità dei dataset. 
+
+Infine vengono tratte le relative conclusione e vengono proposti sviluppi futuri sull'algoritmo.
 
 \section{Algoritmi Genetici}\label{alg-gen} 
 
-Gli algoritmi genetici sono software di ricerca ispirati dalla selezione naturale applicata ad una popolazione di individui, chiamati soluzioni, caratterizzati da un \textit{cromosoma}, spesso rappresentato da una lista di numeri binari o da una  stringa.
+Gli algoritmi genetici sono software di ricerca ispirati dalla selezione naturale applicata ad una popolazione di individui, i quali vengono valutati nello svolgimento di un \textit{task} (Ambiente).
 Il parametro che differenzia soluzioni migliori o peggiori è il \textit{fitness}, misurato attraverso la \textit{funzione di fitness} la quale dipende dal problema.
 L' evoluzione della popolazione avviene attraverso la selezione dei migliori individui che passeranno il loro \textit{cromosoma} alla generazione successiva.
 
+Sono stati inventati da John Holland negli anni '60 e sono stati sviluppati dallo stesso Holland e dai suoi studenti e colleghi tra gli anni '60 e '70 \cite{genetic-algorithm-mitchell}.
+L'idea iniziale non era quella di risolvere un particolare problema, in contrasto con l'approccio adottato dai ricercatori per algoritmi evolutivi e programmazione evolutiva, ma di studiare l'adattamento naturale delle specie e trovare un modo per importare questo meccanismo in un computer.
+
+Nel suo libro "\textit{Adaptation in Natural and Artificial Systems}" Holland presenta gli algoritmi genetici come un'astrazione dell'evoluzione biologica: gli algoritmi genetici sono un metodo per muovere una popolazione di \textit{cromosomi} ad una nuova popolazione usando una specie di Selezione Naturale insieme ad operatori ispirati dalla biologia.
+
+
 \subsection{Operatori}
 
-\cite{genetic-algorithm-mitchell}
-I principali operatori che compongo un semplice algoritmo genetico sono:
+I principali operatori che compongo un semplice algoritmo genetico sono\cite{genetic-algorithm-mitchell}:
 
 \paragraph{Selezione} Questo operatore seleziona i migliori individui, più è alto è il fitness e più è probabile che un individuo venga scelto per creare la nuova generazione
 
@@ -140,6 +157,17 @@ Oltre ad essere l'esempio più semplice risulta anche quello più significativo:
 \section{Reti Neurali}
 
 Una rete neurale è una struttura interconnessa di semplici unità procedurali, chiamate nodi. La loro funzionalità si ispira ai neuroni del regno animale. La capacità di elaborazione della rete neurale è contenuta nella ``forza`` delle connessioni tra nodi, espressa dai \textit{pesi} dei collegamenti, ottenuti da processi di \textit{ addestramento} o \textit{apprendimento}. \cite{neural-net-gurney}
+
+L'idea di rete neurale proviene dalle ricerche sull'apprendimento di D.O. Hebb degli anni '40, citando dal suo libro \textit{"Organization of Behavior"} \cite{hebb-learning}:
+
+\begin{quote}
+ \begin{center}
+  \textit{Let us assume that the persistence or repetition of a reverberatory activity (or "trace") tends to induce lasting cellular changes that add to its stability.[…] When an axon of cell A is near enough to excite a cell B and repeatedly or persistently takes part in firing it, some growth process or metabolic change takes place in one or both cells such that A's efficiency, as one of the cells firing B, is increased}
+ \end{center}
+\end{quote} 
+
+Che è la spiegazione della plasticità neuronale (per \textit{firing} si intende l'invio di un segnale, elettrico in questo caso).
+Dalla cosiddetta "\textit{Hebbian Theory}" deriva il modello computazionale di rete neurale di  Warren McCulloch e Walter Pitts chiamato "\textit{Threshold logic}" che aprì la ricerca sulle reti neurali e portò in seguito al più moderno "\textit{Perceptron}".
 
 \subsection{Perceptron}
 
@@ -444,7 +472,7 @@ In questo capitolo verranno presentati i dati ottenuti confrontando le  metodolo
 
 \section{Classificazione dei dataset}
 
-La prima parte dei risultati si concentra nell'analisi delle prestazioni dell'algoritmo nel evolvere una popolazione di reti in grado di separare due classi di punti nei tre dataset presentati in precedenza. Verranno analizzate le prestazioni dei due algoritmi di selezione insieme ai due tipi di funzione di fitness.
+La prima parte dei risultati si concentra nell'analisi delle prestazioni dell'algoritmo nell'evolvere una popolazione di reti in grado di separare due classi di punti nei tre dataset presentati in precedenza. Verranno analizzate le prestazioni dei due algoritmi di selezione insieme ai due tipi di funzione di fitness.
 
 \subsection{Moons Dataset}
 
@@ -463,12 +491,14 @@ Il primo dataset su cui è stato testato l'algoritmo è \textit{moons}, nelle im
 \end{figure}
 
 Nella figura \ref{moons1} viene mostrata una run rappresentativa effettuata utilizzando come algoritmo di Selezione \textit{random mate}: da notare come queste classificazioni raggiungano uno score molto alto (generalmente 100\textdiscount) nonostante la "sicurezza" della rete non sia molto alta nella classicazione di alcuni punti, specialmente se questi si trovano vicini a punti della classe opposta.
+Questo accade perché lo score della rete viene valutato come se questa restituisse una risposta binaria per ogni input (0/1 o rosso/blu) e ciò è indipendente dall'incertezza con la quale viene determinata la classe di un punto. 
+Ciò significa che per l'\textit{accuracy score} se un risultato è 0.01 o 0.49 questo sarà sempre o corretto o sbagliato a seconda che il valore vero sia 0 o 1, nonostante il secondo risultato sia pieno di incertezza.  
 La "sicurezza" della rete è rappresentata sui grafici dal colore: tanto più è intenso e tanto  più il \textit{Multi-layer perceptron} è sicuro della sua scelta.
 Il colore viene quantificato dalla funzione \textit{predict proba} di \textit{scikit learn}, che restituisce la probabilità calcolata dalla rete che un punto sia rosso o blu.
 
 Alcune generazioni (le ultime) vengono escluse dalle immagini perchè, come detto nel capitolo precedente, sono tutte uguali.
 
-In figura \ref{best1} viene invece mostrato il grafico del fitness del miglior individuo in funzione della generazione
+In figura \ref{best1} viene invece mostrato il grafico del fitness del miglior individuo in funzione della generazione:
 
 \begin{figure}[H]
  \centering
@@ -825,9 +855,12 @@ Nel caso di \textit{circles+} si raggiunge in fretta un livello di noise tale da
 
 In questo capitolo verranno discussi i principali risultati presentati nel capitolo precedente.
 La separazione compiuta dall'algoritmo sui dataset composti da due classi di punti sembra essere buona sotto una certa soglia di rumore e ciò vale sia per l'\textit{accuracy score} sia per la \textit{logarithmic loss}, nonostante esistano delle nette differenze tra le due in capacità di classificazione, almeno per quanto osservato nei dataset \textit{circles} e \textit{moons}, nei quali la seconda risulta più precisa e meno approssimativa. 
+
 Nel terzo dataset invece il comportamento sembra simile anche se, ancora una volta, la \textit{log loss} raggiunge un risultato più preciso se si considerano le zone di bordo tra punti rossi e blu. 
 In generale, possiamo dire che per quanto riguarda questi semplici casi di classificazione di punti l'algoritmo riesce a trovare un individuo in grado di compiere una separazione più o meno netta (ciò dipende dal noise) nonostante lo spazio di ricerca sia molto vasto, ottenendo risultati migliori se invece di considerare la semplice risposta binaria della rete (blu/rosso) si considera la sicurezza con la quale la rete attribuisce tale risposta e si cerca di massimizzare tale certezza.
+
 Naturalmente ciò non significa che l'MLP restituito dalla convergenza dell'algoritmo sia il migliore in termini di classificazione o semplicemente in termini di costo computazionale, sia per il suo addestramento sia nel calcolare la sua risposta, che in caso di problemi complessi rappresenta sicuramente un problema. 
+
 Per questo si è voluto analizzare anche la complessità della rete, quantificandola in tre parametri: Link, Numero di hidden layer (profondità o lunghezza) e numero di neuroni nel layer più piccolo.
 Ricordando che non esiste nell'algoritmo genetico nessuna forma di penalità per reti troppo "grandi", sembra scontato affermare che in qualsiasi caso l'algoritmo tenderà a preferire un numero molto grande di hidden layer aumentandolo di generazione in generazione dato che in generale reti di questo tipo dovrebbe avere performance di classificazione migliore.
 In realtà ciò accade solo nel caso di rumore molto basso o nullo: diminuendolo infatti in tutti e tre i dataset la lunghezza e il numero di link della rete crescono molto rapidamente, il che sembra rappresentare un comportamento totalmente anti-intuitivo. 
