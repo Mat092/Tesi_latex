@@ -147,6 +147,8 @@ Il classico esempio di utilizzo di un algoritmo genetico è la ricerca dei massi
 In tal caso, un individuo è rappresentato da una stringa di bit, la \textit{funzione di fitness} è la funzione stessa e il \textit{fitness} delle soluzioni è il valore della funzione calcolato nel punto di cui l'individuo è la rappresentazione binaria.
 Oltre ad essere l'esempio più semplice risulta anche quello più significativo: di fatto lo scopo di un algoritmo genetico è l'ottimizzazione.  
 
+Ad oggi gli algoritmi genetici vengono utilizzati in molti campi per l'ottimizzazione di funzioni arbitrarie non necessariamente continue o derivabili.
+
 \section{Reti Neurali}
 
 Una rete neurale è una struttura interconnessa di semplici unità procedurali, chiamate nodi. La loro funzionalità si ispira ai neuroni del regno animale. La capacità di elaborazione della rete neurale è contenuta nella ``forza`` delle connessioni tra nodi, espressa dai \textit{pesi} dei collegamenti, ottenuti da processi di \textit{ addestramento} o \textit{apprendimento}. \cite{neural-net-gurney}
@@ -160,15 +162,14 @@ L'idea di rete neurale proviene dalle ricerche sull'apprendimento di D.O. Hebb d
 \end{quote} 
 
 Che è la spiegazione della plasticità neuronale (per \textit{firing} si intende l'invio di un segnale, elettrico in questo caso).
-Dalla cosiddetta "\textit{Hebbian Theory}" deriva il modello computazionale di rete neurale di  Warren McCulloch e Walter Pitts chiamato "\textit{Threshold logic}" che aprì la ricerca sulle reti neurali e portò in seguito al "\textit{Perceptron}" e al più moderno \textit{deep learning}, oggi applicato in moltissimi campi come il riconoscimento di file audio, la bioinformatica, riconoscimento di immagini e perfino giochi da tavolo.
+Dalla cosiddetta "\textit{Hebbian Theory}" deriva il modello computazionale di rete neurale di  Warren McCulloch e Walter Pitts chiamato "\textit{Threshold logic}" che aprì la ricerca sulle reti neurali e portò in seguito al "\textit{Perceptron}", trattato nella sezione \ref{percettrone}, o al più moderno \textit{deep learning},  oggi applicato in moltissimi campi come il riconoscimento di file audio, la bioinformatica, il riconoscimento di immagini e perfino i giochi da tavolo.
 
-\subsection{Perceptron}
+\subsection{Perceptron}\label{percettrone}
 
-\cite{neural-net-nielsen}
-Il perceptron è stato sviluppato negli anni '50 e '60 dal ricercatore Frank Rosenblatt ispirandosi ai lavori antecedenti di Warren McCulloch e Walter Pitts.
+Il \textit{perceptron} è stato sviluppato negli anni '50 e '60 dal ricercatore Frank Rosenblatt ispirandosi ai lavori antecedenti di Warren McCulloch e Walter Pitts \cite{neural-net-nielsen}.
 È l'unità di base di una rete neurale e il suo funzionamento è il seguente:
-il perceptron riceve $n$ valori in ingresso $x_{1},x_{2},...,x_{n}$ e restituisce $1$ o $0$ a seconda che la somma pesata degli input superi o no un valore di soglia, con pesi $w_{1},w_{2},...,w_{n}$.
-Ad esempio nel perceptron mostrato in figura \ref{perceptron}:
+il \textit{perceptron} riceve $n$ valori in ingresso $x_{1},x_{2},...,x_{n}$ e restituisce $1$ o $0$ a seconda che la somma pesata degli input superi o no un valore di soglia, con pesi $w_{1},w_{2},...,w_{n}$.
+Ad esempio nel \textit{perceptron} mostrato in figura \ref{perceptron}:
 
 \begin{figure}[H]
  \centering
@@ -219,6 +220,8 @@ Un altro tipo di funzione di attivazione è la \textit{Rectified Linear Units} o
  y(x) = max \{0,x\} 
 \end{equation}
 
+La \textit{ReLU} viene spesso usata per risolvere il problema del \textit{vanishing gradient} nel deep learning: quando la funzione sigmoidale è molto vicina ad 1 la derivata si annulla per problemi numerici e ciò rende difficile il tuning dei pesi dei primi layer. Il problema risulta più grave per reti molto profonde.
+
 \begin{figure}[H]
  \centering
  \includegraphics[scale = 0.5]{images/sigmoide.png}
@@ -241,6 +244,8 @@ La struttura di una rete neurale \textit{fully connected} composta da molti \tex
 \end{figure} 
 
 In una rete come questa ad ogni collegamento è associato un peso e ad ogni nodo è associato un \textit{bias}: gli output dei \textit{neuroni} del \textit{layer} di input diventano a loro volta valori in ingresso del \textit{layer} successivo in un procedimento a catena fino all'ultimo \textit{layer}, che restituisce la risposta della rete. 
+Le reti \textit{fully connected} sono considerate \textit{universal approximators}, nel senso che dati abbastanza parametri sono in grado di approssimare qualsiasi funzione per quanto complessa.\cite{neural-net-nielsen}
+
 L'addestramento della rete consiste nel valutarne gli output in un determinato set di dati, chiamato \textit{training dataset}, confrontarli con i valori attesi, forniti dallo stesso \textit{dataset}, e modificare pesi e \textit{bias} in modo che la risposta si avvicini a ciò che ci si aspetta.
 
 L'algoritmo di addestramento più utilizzato è la \textit{Backpropagation}, che è la modalità utilizzata per i \textit{Multy Layer Perceptron} in questa prova.
@@ -370,14 +375,16 @@ Ciò viene fatto utilizzando due metri di valutazione differenti, valutati in pa
 \paragraph{\textit{Accuracy score}} questo metodo è il più semplice e diretto: attribuisce un fitness pari alla percentuale di risposte corrette della rete. Il problema di questo procedimento è che equipara una risposta di $0.51$ ad $1$ ed una di $0.49$ a $0$ nonostante in entrambe le risposte l'incertezza sia alta.
 L'\textit{accuracy score} viene massimizzato nell'algoritmo.
 
-\paragraph{\textit{Logarithmic loss function}} o \textit{log loss}, è una misura di quanta incertezza pone la rete nelle sue risposte. Dalla documentazione di \textit{scikit learn} la \textit{log loss} è definita come "\textit{the negative log-likehood of the true labels given a probabilistic classifier's prediction}" o :  
+\paragraph{\textit{Logarithmic loss function}} o \textit{log loss}, è una misura di quanta incertezza pone la rete nelle sue risposte. Dalla documentazione di \textit{scikit learn} la \textit{log loss} è definita come "\textit{the negative log-likehood of the true labels given a probabilistic classifier's prediction}" o:  
 
 \begin{equation}
  -log P(\frac{y_{t}}{y_{p}}) = -(y_{t} log(y_{p}) + (1 - y_{t}) log(1 - y_{p}))
 \end{equation}
 Dove $y_{t}$ è la classe dell'oggetto (o $0$ o $1$ ), mentre $y_{p}$ è la probabilità stimata che l'oggetto sia di quella classe.
 
-Non è stata attribuita nessuna forma di penalità alla profondità delle reti o ,più in generale, a quanti collegamenti essa forma, che potrebbero quindi diventare sempre più grandi e computazionalmente pesanti da gestire, ma verrà studiato in seguito come si comportano queste grandezze (numero di collegamenti e lunghezza). 
+Una caratteristica della log loss è la presenza di un limite superiore (che quantifica quanto incerta può essere al massimo una rete) che è possibile stimare estraendo a caso dei numeri tra 0 e 1 (simulando praticamente un addestramento nullo) e misurando lo score risultante: si ottiene cosi una stima pari a  $-ln(0.5) \approx 0.7$.
+
+Non è stata attribuita nessuna forma di penalità alla profondità delle reti o, più in generale, a quanti collegamenti essa forma, che potrebbero quindi diventare sempre più grandi e computazionalmente pesanti da gestire, ma verrà studiato in seguito come si comportano queste grandezze (numero di collegamenti e lunghezza). 
 
 Ogni MLP viene addestrato e valutato su due sezioni diverse del dataset: \textit{train set} e \textit{test set}.
 Entrambe rappresentano una frazione dell'intero dataset scelta casualmente, in particolare sono rispettivamente l'80\textdiscount e il \textdiscount del dataset.
@@ -399,6 +406,8 @@ Sono stati usati per le prove 3 tipi di dataset:
  \label{moons}
 \end{figure}
 
+In questo caso i due gruppi hanno deviazioni standard simili ma medie diverse.
+
 \paragraph{circles} I punti vengono generati a forma di cerchi concentrici, è possibile fornire diversi gradi di separazione ai due cerchi attraverso il parametro \textit{factor}. Il dataset è mostrato in figura \ref{circles}
 
 \begin{figure}[H]
@@ -409,6 +418,8 @@ Sono stati usati per le prove 3 tipi di dataset:
  \label{circles}
 \end{figure}
 
+Qui i due gruppi hanno medie simili ma deviazioni standard diverse, inoltre non sono separabili linearmente se non attraverso una trasformazione in coordinate polari.
+
 \paragraph{circles+} È un dataset personalizzato creato dall'unione di due \textit{circles}, come mostrato in figura \ref{circles+}
 
 \begin{figure}[H]
@@ -418,6 +429,8 @@ Sono stati usati per le prove 3 tipi di dataset:
  \caption{\textit {Nell'immagine a confronto due versioni del dataset circles+: a sinistra con noise = 0 e a destra con noise = 0.1 }}
  \label{circles+}
 \end{figure}
+
+Questo dataset non permette nemmeno un tipo di separazione simile a quello descritto nel paragrafo precedente.
 
 Per tutti i datasets è possibile attribuire un \textit{noise} in modo che sia più difficile separare le due classi di punti.
 Nel corso delle prove sono state valutate le prestazioni dell'algoritmo su tutti i datasets.
@@ -445,7 +458,7 @@ Per chiarezza viene riportata la struttura dell'algoritmo, che ne mostra i vari 
   \item [c.] Valutazione del fitness e ordinamento della nuova generazione
   \item [d.] Risultati del migliore individuo sul dataset scelto.
  \end{enumerate}
- \item Termine dell'algoritmo.
+ \item Termine dell'algoritmo nel caso il membro della popolazione con miglior fitness rimanga lo stesso per 5 generazioni di fila.
 \end{enumerate}
 
 Ogni iterazione di questo processo viene chiamata \textit{run}
@@ -469,9 +482,6 @@ Queste grandezze sono prese come misura della complessità della rete.
 Ognuna di queste è stata studiata in funzione del \textit{noise} del dataset come misura di quanto questo risulti separabile: un dataset più rumoroso risulta inevitabilmente più difficile da classificare, sopratutto nel momento in cui punti blu e rossi siano molto vicini.
 In questo secondo caso vengono effettuate numerose simulazioni e da ognuna vengono estratti i dati citati sopra dalla rete di convergenza.
 Dopodichè viene mostrata la media punto per punto in funzione del noise ed in funzione dello score ottenuto a quel livello di noise.
-
-
-
 
 \chapter{Risultati}
 
@@ -569,7 +579,6 @@ Vengono presentati in forma parallela alla sezione precedente i risultati ottenu
 
 Anche in questo caso l'accuracy score mostra una convergenza dell'algoritmo molto rapida e approssimativa nella classificazione.
 
-
 \begin{figure}[H]
  \centering
  \includegraphics[scale = 0.4]{images/circle-rnd-log/1}
@@ -646,14 +655,14 @@ I parametri importanti da considerare nel valutare la complessità di una rete s
 \end{enumerate}
 
 Questi ci danno una misura di quanta informazione può contenere e quanto è possibile comprimerla.
-Nell'algoritmo genetico non è stata impostata alcuna penalità in relazione alla complessità della rete,l'obiettivo infatti non è stato quello di trovare la rete più performante, quindi esiste la possibilità che non converga mai ad un risultato finale, costruendo reti sempre più profonde e precise nel separare i dati.
-In realtà ciò non è osservato nei casi visionati fino ad ora, ossia quando le due classi non sono perfettamente separabili. 
-Inoltre, come già accennato, per la funzione di fitness \textit{accuracy score} non può succedere perchè prima o poi l'algoritmo convergerà ad una soluzione con score pari a $100$\textdiscount, di fatto insuperabile.
+Nell'algoritmo genetico non è stata impostata alcuna penalità in relazione alla complessità della rete, l'obiettivo infatti non è stato quello di trovare la rete più performante in termini computazionali, quindi esiste la possibilità che non converga mai ad un risultato finale, costruendo reti sempre più profonde e precise nel separare i dati.
+In realtà ciò non è osservato nei casi elencati fino ad ora, ossia quando le due classi non sono perfettamente separabili. 
+Inoltre, come già accennato, per la funzione di fitness \textit{accuracy score} non può succedere perché prima o poi l'algoritmo convergerà ad una soluzione con score pari a $100$\textdiscount, di fatto insuperabile.
 
-La situazione è diversa per la \textit{log loss} che invece ha un limite inferiore asintotico. 
-Per questo motivo è stato studiato il comportamento dell'algoritmo con questa funzione di fitness al variare della separabilità dei dati, quantificata dal \textit{noise} dei rispettivi dataset. 
+La situazione è diversa per la \textit{log loss} che invece ha un limite inferiore asintotico: nel senso che è idealmente impossibile trovare una rete perfetta di score nullo (nel seguito fitness molto bassi vengano trattati come 0, questo perché differenziare un $3\cdot10^{-5}$ da un $2\cdot10^{-5}$ in termini pratici è irrilevante: entrambe le reti sono state abbastanza precise da classificare ogni punto correttamente nonostante per l'algoritmo la seconda sia migliore).    
+Per questo motivo è stato studiato il comportamento dell'algoritmo con questa funzione di fitness al variare della separabilità dei dati, quantificata dal rumore.
 
-L'obiettivo è quindi quello di studiare l'andamento di questi parametri in funzione del \textit{noise } dei dataset.
+L'obiettivo è quindi quello di studiare l'andamento di questi parametri in funzione del \textit{noise} dei dataset.
 
 \subsection{Moons Dataset}
 
@@ -668,7 +677,6 @@ Iniziamo con il presentare i dati relativi all'andamento del fitness delle reti 
 
 Nel dataset \textit{moons} lo score non risulta sensibile ai cambiamenti del noise e rimane prossimo a 0 (per la \textit{logloss} uno score migliore rappresenta un fitness maggiore) fino a che la run raggiunge noise = 0.2: probabilmente questo è il valore in cui i punti non sono più perfettamente separabili.
 Il grafico non sembra mostrare un andamento di saturazione per alti livelli di noise, ciò significa che nonostante le reti ancora riescono a distinguere alcuni punti rossi e blu.
-
 
 Di seguito verranno mostrati gli andamenti delle grandezze scelte come rappresentative della complessità della rete.
 
