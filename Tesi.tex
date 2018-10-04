@@ -39,11 +39,11 @@ Corso di Laurea in Fisica}}
 
 \vspace{23mm}
 
-\begin{center}\textcolor{red}{
+\begin{center}\textcolor{black}{
 %
 % INSERIRE IL TITOLO DELLA TESI
 %
-{\LARGE{\bf Valutazione della complessità di reti neurali generate tramite algoritmi genetici}}\\
+{\LARGE{\bf Analisi della complessità di reti neurali generate tramite algoritmi genetici}}\\
 }\end{center}
 
 \vspace{50mm} \par \noindent
@@ -87,9 +87,8 @@ Anno Accademico \textcolor{black}{ 2017/2018}
 
 \end{titlepage}
 
-
 \tableofcontents
-%\clearpage{\pagestyle{empty}\cleardoublepage}1
+%\clearpage{\pagestyle{empty}\cleardoublepage}
 
 \chapter{Introduzione}
 
@@ -115,8 +114,7 @@ Sono stati inventati da John Holland negli anni '60 e sono stati sviluppati dall
 L'idea iniziale non era quella di risolvere un particolare problema, in contrasto con l'approccio adottato dai ricercatori per algoritmi evolutivi e programmazione evolutiva, ma di studiare l'adattamento naturale delle specie e trovare un modo per importare questo meccanismo in un computer.
 
 Nel suo libro "\textit{Adaptation in Natural and Artificial Systems}" Holland presenta gli algoritmi genetici come un'astrazione dell'evoluzione biologica: gli algoritmi genetici sono un metodo per muovere una popolazione di \textit{cromosomi} ad una nuova popolazione usando una specie di Selezione Naturale insieme ad operatori ispirati dalla biologia.
-
-
+         
 \subsection{Operatori}
 
 I principali operatori che compongo un semplice algoritmo genetico sono\cite{genetic-algorithm-mitchell}:
@@ -162,7 +160,7 @@ L'idea di rete neurale proviene dalle ricerche sull'apprendimento di D.O. Hebb d
 \end{quote} 
 
 Che è la spiegazione della plasticità neuronale (per \textit{firing} si intende l'invio di un segnale, elettrico in questo caso).
-Dalla cosiddetta "\textit{Hebbian Theory}" deriva il modello computazionale di rete neurale di  Warren McCulloch e Walter Pitts chiamato "\textit{Threshold logic}" che aprì la ricerca sulle reti neurali e portò in seguito al più moderno "\textit{Perceptron}".
+Dalla cosiddetta "\textit{Hebbian Theory}" deriva il modello computazionale di rete neurale di  Warren McCulloch e Walter Pitts chiamato "\textit{Threshold logic}" che aprì la ricerca sulle reti neurali e portò in seguito al "\textit{Perceptron}" e al più moderno \textit{deep learning}, oggi applicato in moltissimi campi come il riconoscimento di file audio, la bioinformatica, riconoscimento di immagini e perfino giochi da tavolo.
 
 \subsection{Perceptron}
 
@@ -456,10 +454,24 @@ Ogni iterazione di questo processo viene chiamata \textit{run}
 
 L'analisi dei dati può essere suddivisa in due parti: nella prima lo studio si concentra sulla capacità dell'algoritmo di separare le due classi di punti in ogni set di dati e con ognuna delle modalità presentate in precedenza, mostrando in ogni caso l'evoluzione qualitativa della migliore rete per ogni generazione.
 
-Nella seconda parte ci si concentra invece su un'analisi quantitativa di alcune grandezze che caratterizzano la rete neurale: il numero di \textit{hidden layer}, la grandezza del layer con minore numero di neuroni e il numero di collegamenti che la rete produce.
+Nella seconda parte ci si concentra invece su un'analisi quantitativa di alcune grandezze che caratterizzano la rete neurale: il numero di \textit{hidden layer}, la grandezza del layer con minore numero di neuroni e il numero di collegamenti che produce.
+Il numero di \textit{hidden layer} altro non è che la sua lunghezza (o profondità), il numero di collegamenti (o link) dipende invece dal numero di neuroni totali infatti, in una rete \textit{fully connected}, è definito come:
+
+\begin{equation}
+ L = \sum_{i = 1}^{N-1} n_{i}n_{i+1}
+\end{equation}
+
+dove $n_{i}$ è il numero di neuroni dell'$i$-esimo layer e $N$ è il numero totale di layer.
+Quindi prendendo ad esempio la rete [2,4,3] questa avrà $2\cdot2 + 2\cdot4 + 4\cdot3 + 3\cdot1 = 27$ link, contando anche i layer di input e di output.
+
+Queste grandezze sono prese come misura della complessità della rete.
+
 Ognuna di queste è stata studiata in funzione del \textit{noise} del dataset come misura di quanto questo risulti separabile: un dataset più rumoroso risulta inevitabilmente più difficile da classificare, sopratutto nel momento in cui punti blu e rossi siano molto vicini.
 In questo secondo caso vengono effettuate numerose simulazioni e da ognuna vengono estratti i dati citati sopra dalla rete di convergenza.
 Dopodichè viene mostrata la media punto per punto in funzione del noise ed in funzione dello score ottenuto a quel livello di noise.
+
+
+
 
 \chapter{Risultati}
 
@@ -472,9 +484,9 @@ La prima parte dei risultati si concentra nell'analisi delle prestazioni dell'al
 \subsection{Moons Dataset}
 
 Il primo dataset su cui è stato testato l'algoritmo è \textit{moons}, nelle immagini successive vengono riportati alcuni esempi di run effettute, differenziando \textit{Accuracy score} e \textit{log loss}, cioè i due diversi tipi di \textit{fitness function}, e i due algoritmi di selezione, che sono \textit{random mate} e \textit{all sons}.
- 
-\paragraph{Accuracy score}
- 
+
+In figura \ref{moons1} viene mostrata una run d'esempio utilizzando l'accuracy score:
+
 \begin{figure}[H]
  \centering
  \includegraphics[scale = 0.4]{images/moons-rnd-acc./1}
@@ -527,7 +539,6 @@ Anche in questo l'evoluzione è rapida e il risultato finale incerto, nonostante
 
 Data l'inefficienza sia computazionale sia in termini di performance, è stato deciso di abbandonare questo algoritmo di selezione per i prossimi datasets.
 
-\paragraph{logarithmic loss}
 
 Significative differenze su questo dataset si hanno cambiando il tipo di funzione di fitness e passando alla \textit{logaritmic loss}, come mostrato in figura \ref{moons3}
 
@@ -854,7 +865,7 @@ La separazione compiuta dall'algoritmo sui dataset composti da due classi di pun
 Nel terzo dataset invece il comportamento sembra simile anche se, ancora una volta, la \textit{log loss} raggiunge un risultato più preciso se si considerano le zone di bordo tra punti rossi e blu. 
 In generale, possiamo dire che per quanto riguarda questi semplici casi di classificazione di punti l'algoritmo riesce a trovare un individuo in grado di compiere una separazione più o meno netta (ciò dipende dal noise) nonostante lo spazio di ricerca sia molto vasto, ottenendo risultati migliori se invece di considerare la semplice risposta binaria della rete (blu/rosso) si considera la sicurezza con la quale la rete attribuisce tale risposta e si cerca di massimizzare tale certezza.
 
-Naturalmente ciò non significa che l'MLP restituito dalla convergenza dell'algoritmo sia il migliore in termini di classificazione o semplicemente in termini di costo computazionale, sia per il suo addestramento sia nel calcolare la sua risposta, che in caso di problemi complessi rappresenta sicuramente un problema. 
+Naturalmente ciò non significa che l'MLP restituito dalla convergenza dell'algoritmo sia il migliore in termini di classificazione o in termini di costo computazionale, sia per il suo addestramento sia nel calcolare la sua risposta, che in caso di problemi complessi rappresenta sicuramente un problema. 
 
 Per questo si è voluto analizzare anche la complessità della rete, quantificandola in tre parametri: Link, Numero di hidden layer (profondità o lunghezza) e numero di neuroni nel layer più piccolo.
 Ricordando che non esiste nell'algoritmo genetico nessuna forma di penalità per reti troppo "grandi", sembra scontato affermare che in qualsiasi caso l'algoritmo tenderà a preferire un numero molto grande di hidden layer aumentandolo di generazione in generazione dato che in generale reti di questo tipo dovrebbe avere performance di classificazione migliore.
@@ -863,7 +874,20 @@ In realtà ciò accade solo nel caso di rumore molto basso o nullo: diminuendolo
 In altre parole la complessità della rete aumenta al diminuire della complessità del dataset: questa caratteristica potrebbe essere dovuta ad una sorta di penalizzazione interna all'addestramento degli MLP.
 Infatti, la separazione tra \textit{train set} e \textit{test set} fa in modo che le reti che ottengono alti score sul primo (\textit{overfitting}) vengano in seguito penalizzate sul secondo.
 
-Questo si osserva su noise elevati ed in tutti e tre i casi sembra esistere un valore di soglia oltre il quale 
+Questo si vede su noise elevati ed in tutti e tre i casi sembra esistere un valore di soglia oltre il quale il fitness degli individui peggiora enormemente fino a raggiungere un valore stabile per i dataset \textit{circles}(intorno a 0.6) e \textit{circles+} (compreso tra 0.5 e 0.6), mentre per \textit{moons} questo non si osserva, molto probabilmente perché la rete è ancora in grado di distinguere due gruppi di punti.
+
+Andando ad analizzare più in dettaglio i dataset:
+
+\paragraph{\textit{moons :}} i dati confermano l'andamento generale descritto sopra a parte per il numero di link nel layer minore, che invece in questo caso rimane costante: ciò che ci dice che la minima compressione dell'informazione non dipende da quando sia rumoroso il dataset ne dallo score ottenuto dalla rete.
+Confrontando il grafico dello score con quelli dei links osserviamo che mentre il primo rimane costante a 0, il secondo è quasi dimezzato, cosi come la profondità della rete. 
+\paragraph{\textit{circles :}} il valore sul quale si stabilizza lo score è molto alto rispetto al punto che \textit{moons} raggiunge, probabilmente qui i punti sono completamente mischiati e non vi è traccia di qualche dato che la rete possa ricavare per riconoscerli. Ciò probabilmente è lo stesso motivo per cui gli andamenti di lunghezza delle reti e dei link si stabilizzano. Si osserva un andamento interessante attorno a noise = 0.2 , come un plateau, forse dovuto ad una regolarità nei dataset.
+\paragraph{\textit{circles+ :}} gli andamenti sono simili a quelli di \textit{circles} anche se qui il valore di score stabile è leggermente più basso, anche se è più stretto il range di valori al quale il fitness rimane nullo: ciò è dovuto alle irregolarità di questo dataset che anche in condizioni di noise basso risulta più difficile da classificare per l'algoritmo.
+
+In tutti i casi viene osservata quella che sembra essere una transizione di fase nella rete neurale dovuta alla rumorosità dei dati con cui ha a che fare.
+
+Possibili sviluppi per l'algoritmo potrebbero essere l'introduzione di una penalità che scali in funzione della complessità della rete, in modo da evidenziare le differenze di comportamento tra le due versioni, sopratutto verificare se il comportamento della rete rimanga dipendente dalla rumorosità dei dati.
+La limitazione a dati artificiali andrebbe superata in favore di dati reali su cui testarne il funzionamento.
+Inoltre sarebbe interessante applicare questi metodi alle reti a convoluzione, un particolare tipo di reti neurali ispirate alla corteccia visiva animale, che sono una variazione del MLP e hanno diverse applicazioni nel riconoscimento di immagini e video.
 
 \listoffigures
 
