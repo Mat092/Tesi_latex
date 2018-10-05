@@ -86,9 +86,26 @@ Anno Accademico \textcolor{black}{ 2017/2018}
 \end{center}
 
 \end{titlepage}
-
-\tableofcontents
+ 
+\small\tableofcontents
 %\clearpage{\pagestyle{empty}\cleardoublepage}
+
+\newpage
+
+\vspace*{200px}
+\LARGE\textit{Abstract}
+\normalsize
+
+L'enorme quantità di dati sviluppata tramite le infrastrutture moderne richiede strumentazioni di analisi sempre più precise, rapide e performanti. 
+Per questo negli ultimi anni i metodi del machine learning hanno visto un'esplosione nella ricerca e nell'utilizzo di algoritmi mano a mano più efficienti per ogni disciplina. 
+Due tra le numerose famiglie di tecniche appartenenti alla sfera del machine learning sono reti neurali e algoritmi genetici. 
+Il progetto di tesi presentato ha come obiettivo quello di verificare la possibilità di evolvere la struttura di una rete neurale attraverso un algoritmo genetico in modo da automatizzarne il processo di costruzione, che ad oggi consiste in un procedimento di trial and error.
+Le reti verranno valutate nella separazione di due classi di punti in dataset artificiali semplici per verificare la bontà dell'algoritmo. 
+Dopodiché lo studio si concentrerà sull'analisi del come e quando la rumorosità dei dati influenzi la complessità della rete ottenuta dall'algoritmo genetico.
+
+
+\newpage
+\normalsize 
 
 \chapter{Introduzione}
 
@@ -231,6 +248,8 @@ La \textit{ReLU} viene spesso usata per risolvere il problema del \textit{vanish
 \end{figure}
 
 La scelta della migliore funzione di attivazione non è univoca e dipende dal problema che viene affrontato.
+
+\newpage
 
 \subsection{Struttura \textit{fully connected}}
 
@@ -463,6 +482,8 @@ Per chiarezza viene riportata la struttura dell'algoritmo, che ne mostra i vari 
 
 Ogni iterazione di questo processo viene chiamata \textit{run}
 
+\newpage
+
 \section{Analisi Dati}
 
 L'analisi dei dati può essere suddivisa in due parti: nella prima lo studio si concentra sulla capacità dell'algoritmo di separare le due classi di punti in ogni set di dati e con ognuna delle modalità presentate in precedenza, mostrando in ogni caso l'evoluzione qualitativa della migliore rete per ogni generazione.
@@ -499,9 +520,9 @@ In figura \ref{moons1} viene mostrata una run d'esempio utilizzando l'accuracy s
 
 \begin{figure}[H]
  \centering
- \includegraphics[scale = 0.4]{images/moons-rnd-acc./1}
- \includegraphics[scale = 0.4]{images/moons-rnd-acc./2}
- \includegraphics[scale = 0.4]{images/moons-rnd-acc./3}
+ \includegraphics[scale = 0.5]{images/moons-rnd-acc./1}
+ \includegraphics[scale = 0.5]{images/moons-rnd-acc./2}
+ \includegraphics[scale = 0.5]{images/moons-rnd-acc./3}
  %\includegraphics[scale = 0.4]{images/moons-rnd-acc./4}
  \caption{\textit{L'immagine mostra una run tipica usando l'accuracy score e la random mate selection e noise = 0.25}}
  \label{moons1}
@@ -519,7 +540,7 @@ In figura \ref{best1} viene invece mostrato il grafico del fitness del miglior i
 
 \begin{figure}[H]
  \centering
- \includegraphics[scale = 0.4]{images/moons-rnd-acc./best}
+ \includegraphics[scale = 0.5]{images/moons-rnd-acc./best}
  \caption{\textit{Best fitness di ogni generazione della popolazione con accuracy score e random mate}}
  \label{best1}
 \end{figure}
@@ -530,9 +551,9 @@ Risultati simili vengono raggiunti dal secondo algoritmo di selezione, mostrati 
 
 \begin{figure}[H]
  \centering
- \includegraphics[scale = 0.4]{images/moons-sons-acc./1}
- \includegraphics[scale = 0.4]{images/moons-sons-acc./2}
- \includegraphics[scale = 0.4]{images/moons-sons-acc./3}
+ \includegraphics[scale = 0.5]{images/moons-sons-acc./1}
+ \includegraphics[scale = 0.5]{images/moons-sons-acc./2}
+ \includegraphics[scale = 0.5]{images/moons-sons-acc./3}
  %\includegraphics[scale = 0.35]{images/moons-sons-acc./4}
  \caption{\textit{In figura viene mostrata una run d'esempio utilizzando lo stesso noise e stessa funzione di fitness ma diverso algoritmo di selezione}}
  \label{moons2}
@@ -542,7 +563,7 @@ Anche in questo l'evoluzione è rapida e il risultato finale incerto, nonostante
 
 \begin{figure}[H]
  \centering
- \includegraphics[scale = 0.4]{images/moons-sons-acc./best}
+ \includegraphics[scale = 0.5]{images/moons-sons-acc./best}
  \caption{\textit{In figura viene mostrato l'andamento del best fitness in funzione della generazione}}
  \label{best2}
 \end{figure}
@@ -554,10 +575,11 @@ Significative differenze su questo dataset si hanno cambiando il tipo di funzion
 
 \begin{figure}[H]
  \centering
- \includegraphics[scale = 0.35]{images/moons-rnd-log./1}
- \includegraphics[scale = 0.35]{images/moons-rnd-log./2}
- \includegraphics[scale = 0.35]{images/moons-rnd-log./3}
- \includegraphics[scale = 0.35]{images/moons-rnd-log./4}
+ \includegraphics[scale = 0.37]{images/moons-rnd-log./1}
+ \includegraphics[scale = 0.37]{images/moons-rnd-log./2}
+ \\
+ \includegraphics[scale = 0.37]{images/moons-rnd-log./3}
+ \includegraphics[scale = 0.37]{images/moons-rnd-log./4}
  \caption{\textit{Evoluzione di una rete neurale seguendo la logarithmic loss function sul dataset moons}}
  \label{moons3}
 \end{figure}
@@ -568,11 +590,11 @@ Vengono presentati in forma parallela alla sezione precedente i risultati ottenu
 
 \begin{figure}[H]
  \centering
- \includegraphics[scale = 0.4]{images/circles-rnd-acc/1}
- \includegraphics[scale = 0.4]{images/circles-rnd-acc/2}
+ \includegraphics[scale = 0.5]{images/circles-rnd-acc/1}
+ \includegraphics[scale = 0.5]{images/circles-rnd-acc/2}
  \\
- \includegraphics[scale = 0.4]{images/circles-rnd-acc/3}
- \includegraphics[scale = 0.4]{images/circles-rnd-acc/4}
+ \includegraphics[scale = 0.5]{images/circles-rnd-acc/3}
+ \includegraphics[scale = 0.5]{images/circles-rnd-acc/4}
  \caption{\textit{L'immagine mostra una run d'esempio nel dataset circles usando l'accuracy score}}
  \label{circles1}
 \end{figure}
@@ -581,17 +603,18 @@ Anche in questo caso l'accuracy score mostra una convergenza dell'algoritmo molt
 
 \begin{figure}[H]
  \centering
- \includegraphics[scale = 0.4]{images/circle-rnd-log/1}
- \includegraphics[scale = 0.4]{images/circle-rnd-log/2}
+ \includegraphics[scale = 0.5]{images/circle-rnd-log/1}
+ \includegraphics[scale = 0.5]{images/circle-rnd-log/2}
  \\
- \includegraphics[scale = 0.4]{images/circle-rnd-log/3}
- \includegraphics[scale = 0.4]{images/circle-rnd-log/4}
+ \includegraphics[scale = 0.5]{images/circle-rnd-log/3}
+ \includegraphics[scale = 0.5]{images/circle-rnd-log/4}
  \caption{\textit{L'immagine mostra una run d'esempio nel dataset circles usando la log loss}}
  \label{circles2}
 \end{figure}
 
 Come per il precedente dataset, questa funzione di fitness sembra riportare una classificazione più precisa, come mostrato in figura \ref{circles2}.
 
+\newpage
 
 \subsection{Circles+ Dataset}
 
@@ -664,13 +687,15 @@ Per questo motivo è stato studiato il comportamento dell'algoritmo con questa f
 
 L'obiettivo è quindi quello di studiare l'andamento di questi parametri in funzione del \textit{noise} dei dataset.
 
+\newpage
+
 \subsection{Moons Dataset}
 
 Iniziamo con il presentare i dati relativi all'andamento del fitness delle reti in funzione del noise introdotto nel dataset \textit{moons} in figura \ref{score_moons}.
 
 \begin{figure}[H]
  \centering
- \includegraphics[scale = 0.5]{images/score_noise_moons.png}
+ \includegraphics[scale = 0.7]{images/score_noise_moons.png}
  \caption{\textit{Nel grafico viene mostrato l'andamento dello score in funzione del noise del dataset. In evidenza alcuni punti interessanti dell'andamento}}
  \label{score_moons}
 \end{figure}
@@ -682,8 +707,8 @@ Di seguito verranno mostrati gli andamenti delle grandezze scelte come rappresen
 
 \begin{figure}[H]
  \centering
- \includegraphics[scale = 0.5]{images/links_noise_moons}
- \includegraphics[scale = 0.5]{images/Links_Score_moons}
+ \includegraphics[scale = 0.6]{images/links_noise_moons}
+ \includegraphics[scale = 0.6]{images/Links_Score_moons}
  \caption{\textit{A confronto gli andamenti del numero di collegamenti in funzione del noise ed in funzione dello score}}
  \label{linksmoons}
 \end{figure}
@@ -722,9 +747,9 @@ Le reti che hanno effetuato tali classificazione sono[17, 20, 24, 23, 24, 26, 20
 
 \begin{figure}[H]
 \centering
- \includegraphics[scale = 0.4]{images/moons-noise0,1}
- \includegraphics[scale = 0.4]{images/moons-noise0,3}
- \includegraphics[scale = 0.4]{images/moons-noise0,6}
+ \includegraphics[scale = 0.5]{images/moons-noise0,1}
+ \includegraphics[scale = 0.5]{images/moons-noise0,3}
+ \includegraphics[scale = 0.5]{images/moons-noise0,6}
  %\includegraphics[scale = 0.35]{images/moons-noise1}
  \caption{\textit{in figura viene mostrata una classificazione d'esempio su diversi livelli di noise, da sinistra : noise = 0.1,noise = 0.2 e noise = 0.6}}
  \label{exnoisemoons}
@@ -732,6 +757,7 @@ Le reti che hanno effetuato tali classificazione sono[17, 20, 24, 23, 24, 26, 20
 
 In figura \ref{exnoisemoons} sono mostrati 3 momenti significativi del dataset: prima della presunta transizione, quando i punti sono ancora perfettamente separabili, durante la transizione a noise = 0.2 quando i punti iniziano a mischiarsi e a  non essere più separabili dalla rete e infine a noise = 0,6, ben oltre la transizione, quando i punti sono definitavemente impossibili da separare se non approssimativamente.
 
+\newpage
 
 \subsection{Circles Dataset}
 
@@ -740,7 +766,7 @@ In figura \ref{score_circles} viene mostrato l'andamento dello score in funzione
 
 \begin{figure}[H]
  \centering
- \includegraphics[scale = 0.5]{images/score_noise_circles.png}
+ \includegraphics[scale = 0.7]{images/score_noise_circles.png}
  \caption{\textit{Nel grafico viene mostrato l'andamento dello score in funzione del noise del dataset. In evidenza alcuni punti interessanti dell'andamento}}
  \label{score_circles}
 \end{figure}
@@ -811,7 +837,7 @@ Nel grafico in figura \ref{score-circles+} viene mostrato l'andamento del fitnes
 
 \begin{figure}[H]
  \centering
- \includegraphics[scale = 0.5]{images/score_noise_circles+}
+ \includegraphics[scale = 0.6]{images/score_noise_circles+}
  \caption{\textit{Andamento dello score in funzione del noise per il dataset circles+}}
  \label{score-circles+}
 \end{figure}
@@ -898,6 +924,7 @@ La limitazione a dati artificiali andrebbe superata in favore di dati reali su c
 Inoltre sarebbe interessante applicare questi metodi alle reti a convoluzione, un particolare tipo di reti neurali ispirate alla corteccia visiva animale, che sono una variazione del MLP e hanno diverse applicazioni nel riconoscimento di immagini e video.
 
 \listoffigures
+
 
 \nocite{*}
 \addcontentsline{toc}{chapter}{Bibliografia}
