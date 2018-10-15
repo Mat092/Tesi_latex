@@ -15,6 +15,7 @@
 \usepackage{textcomp}
 \usetheme{Frankfurt}
 \usecolortheme{beaver}
+\usefonttheme[math]{serif}
 %\usetheme{CambridgeUS}
 
 \setbeamertemplate{caption}{\raggedright\insertcaption\par}
@@ -32,23 +33,42 @@
 
 \begin{frame}
  \frametitle{Introduzione}
- \begin{enumerate}
- \item[-]Algoritmi Genetici
- \begin{enumerate}
- \item[-]
- \end{enumerate}
- \item[-]Reti Neurali
- \end{enumerate}
-
 \end{frame}
+
+\begin{frame}
+ \frametitle{Reti Neurali: perceptron}
+ \begin{figure}
+   \includegraphics[scale = 0.5]{images/perceptron.png}
+%    \includegraphics[scale = 0.3]{images/relu.png}
+   \caption{ }
+  \end{figure}
+  A sinistra la rappresentazione di un perceptron in cui:
+    \begin{equation}
+     output = f(\sum_{i = 1}^{n}x_{i}w_{i} + bias)   
+    \end{equation}
+%     a destra la funzione di attivazione ReLU definita come:  
+%     \begin{equation}
+%       f(x) = max(0,x)
+%     \end{equation}
+\end{frame}
+
+\begin{frame}
+\frametitle{Reti Neurali: MultiLayer Perceptron}
+ \begin{figure}
+  \includegraphics[scale = 0.4]{images/MLPClass.png}
+  \caption{Un esempio di MultiLayer Perceptron semplice con 2 neuroni in input, 2 hidden layer con 3 e 2 neuroni ed un neurone in output}
+ \end{figure}
+\end{frame}
+
 
 \begin{frame}
  \frametitle{Algoritmi Genetici}
+ \begin{figure}
+  \includegraphics[scale = 0.4]{images/crossover.png}
+ \end{figure}
 
 \end{frame}
-\begin{frame}
- \frametitle{Reti Neurali}
-\end{frame}
+
 
 \begin{frame}
  \frametitle{Dataset}
@@ -99,7 +119,7 @@
   \item [-] Lunghezza (o profondità) ossia il numero di hidden layer 
   \item [-] Numero di neuroni nel layer più piccolo
  \end{enumerate}
- Gli ultimi tre sono quelli che quantificano la complessità della rete 
+ Gli ultimi tre sono quelli considerati per la quantificazione della complessità della rete 
 \end{frame}
 
 \begin{frame}
@@ -122,11 +142,30 @@
 \end{frame}
 
 \begin{frame}
+ \frametitle{Links su \textit{Moons} e \textit{Circles+}}
+ \begin{figure}
+  \includegraphics[scale = 0.42]{images/Links_Score_moons.png}
+  \includegraphics[scale = 0.42]{images/Links_Score_circles+.png}
+  \caption{\large Numero di collegamenti in funzione dello \textit{Score} sui dataset \textit{Moons} e \textit{Circles+}}
+ \end{figure}
+
+\end{frame}
+
+\begin{frame}
  \frametitle{Layer più piccolo della rete }
     \begin{figure}
     \includegraphics[scale = 0.42]{images/small_noise_moons.png}
     \includegraphics[scale = 0.42]{images/small_noise_circles+.png}
-    \caption{\large Numero di neuroni nel layer più piccolo della rete su \textit{Moons} (a sinistra) e su \textit{Circles+} (a destra)}
+    \caption{\large Numero di neuroni nel layer più piccolo della rete su \textit{Moons} (a sinistra) e su \textit{Circles+} (a destra) in funzione del rumore}
+ \end{figure}
+\end{frame}
+
+\begin{frame}
+ \frametitle{Layer più piccolo della rete }
+    \begin{figure}
+    \includegraphics[scale = 0.42]{images/small_Score_moons.png}
+    \includegraphics[scale = 0.42]{images/small_Score_circles+.png}
+    \caption{\large Numero di neuroni nel layer più piccolo della rete su \textit{Moons} (a sinistra) e su \textit{Circles+} (a destra) in funzione dello score}
  \end{figure}
 \end{frame}
 
@@ -135,20 +174,34 @@
  \begin{figure}
  \includegraphics[scale = 0.42]{images/depth_noise_moons.png}
  \includegraphics[scale = 0.42]{images/depth_noise_circles+.png}
- \caption{\large Numero di Hidden Layer della rete in funzione del noise su \textit{Moons} (a sinistra) e \textit{Circles+} (a destra)}
- 
+ \caption{\large Numero di Hidden Layer della rete in funzione del noise su \textit{Moons} (a sinistra) e \textit{Circles+} (a destra)} 
  \end{figure}
 \end{frame}
+
+\begin{frame}
+ \frametitle{Lunghezza}
+ \begin{figure}
+  \includegraphics[scale = 0.42]{images/depth_Score_moons.png}
+  \includegraphics[scale = 0.42]{images/depth_Score_circles+.png}
+  \caption{\large Numero di layer della rete in funzione dello score su \textit{Moons} (a sinistra) e \textit{Circles+} (a destra)}
+ \end{figure}
+
+\end{frame}
+
 
 \begin{frame}
  \frametitle{Conclusioni}
 \end{frame}
 
 \begin{frame}
+ \large
  \frametitle{Sviluppi Futuri}
+ \begin{enumerate}
+  \item [-] Applicazione a dataset reali
+  \item [-] Applicazioni a reti neurali a convoluzione
+  \item [-] Aggiunta nell'algoritmo di una penalità per la complessità della rete e confronto dei risultati.
+ \end{enumerate}
+
 \end{frame}
-
-
-
 
 \end{document}
