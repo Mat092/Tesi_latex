@@ -7,6 +7,7 @@
 \usepackage{amsfonts}
 \usepackage{mathrsfs}
 \usepackage{graphicx}
+\usepackage{wrapfig}
 \usepackage{amsthm}
 \usepackage{newlfont}
 \usepackage{color}
@@ -24,11 +25,14 @@
 \begin{document}
 \title{\textcolor{black}{Analisi della complessità di reti neurali generate tramite algoritmi genetici}}
 \author{Mattia Ceccarelli}
-\date{19 ottobre 2018}
-\institute{Università di Bologna}
+\date{A.A. 2017-2018 }
+\institute{Corso di Laurea in Fisica \\ Università di Bologna}
 
 \begin{frame}
  \maketitle
+ Relatore: Dott. Enrico Giampieri
+ 
+ Correlatore: Dott. Nico Curti
 \end{frame}
 
 \begin{frame}
@@ -46,28 +50,37 @@
    \includegraphics[scale = 0.5]{images/perceptron.png}    \includegraphics[scale = 0.35]{images/sigmoide.png}      
   \end{figure}
   A sinistra, rappresentazione di un perceptron in cui:
-    \begin{equation}
+    \begin{equation*}
      output = f(\sum_{i = 1}^{n}x_{i}w_{i} + bias)   
-    \end{equation}
+    \end{equation*}
     A destra, la funzione di attivazione sigmoide definita come:  
-    \begin{equation}
+    \begin{equation*}
       f(x) = \frac{1}{1 + e^{-x}}
-    \end{equation}
+    \end{equation*}
 \end{frame}
+
 
 \begin{frame}
 \frametitle{Reti Neurali: MultiLayer Perceptron}
  \begin{figure}
   \includegraphics[scale = 0.4]{images/MLPClass.png}
-  \caption{Un esempio di MultiLayer Perceptron semplice con 2 neuroni in input, 2 hidden layer con 3 e 2 neuroni ed un neurone in output}
  \end{figure}
+ Un esempio di MultiLayer Perceptron semplice con 2 neuroni in input, 2 hidden layer con 3 e 2 neuroni ed un neurone in output.
+ 
+ Il vettore di output del Layer i-esimo è dato da:
+ $$\textbf{o}_i = f(W_{i,i-1}\cdot \textbf{o}_{i-1} + \textbf{b}_i)$$
+ Dove $W_{ij}$ indica la matrice dei pesi tra il layer i-esimo e j-esimo
+
 \end{frame}
 
 \begin{frame}
  \frametitle{Algoritmi Genetici}
- \begin{figure}
-  
+ \begin{figure}[H]
+  \centering
+  \includegraphics[scale = 0.2]{images/MLPClass.png}
+  \caption{La rete precedente è identificata dal cromosoma [3,2]}
  \end{figure}
+
  \begin{figure}
   \includegraphics[scale = 0.27]{images/population.png}
   \includegraphics[scale = 0.31]{images/flow.png}
@@ -77,9 +90,15 @@
 \begin{frame}
  \frametitle{Funzione di fitness}
  \begin{enumerate}
-  \item [-] Valutazione della rete 
+  \item [-] la valutazione della rete avviene dopo l'addestramento, le due fasi avvengono in parti separate del dataset (train set e test set) 
   \item [-] Consente di selezionare gli individui migliori
-  \item [-] Logarithmic Loss function consente di valutare l'incertezza della rete 
+  \item [-] Logarithmic Loss function consente di valutare l'incertezza della rete. È definita come:
+ $$-log P(\frac{y_t}{y_p}) = -(y_t log(y_p) + (1-y_t)log(1-y_p))$$
+ Dove:
+ \begin{enumerate}
+ \item[.] $y_t$ Classificazione corretta ($0$ o $1$)
+ \item[.] $y_p$ Probabilità stimata che $y_t = 1$
+ \end{enumerate}
  \end{enumerate}
 
 \end{frame}
@@ -90,7 +109,8 @@
   \centering
   \includegraphics[scale = 0.5]{images/moons_noise.png}
   \includegraphics[scale = 0.5]{images/circles+_noise.png}
-  \caption{\large A sinistra \textit{Moons} e a destra \textit{Circles+} con noise = 0.2}
+  \caption{\large A sinistra \textit{Moons} e a destra \textit{Circles+} con $noise = 0.2$.
+  I dataset sono sintetici e il numero di punti è 100}
  \end{figure}
 
 \end{frame}
@@ -132,11 +152,13 @@
   \item [-] Lunghezza (o profondità) ossia il numero di hidden layer 
   \item [-] Numero di neuroni nel layer più piccolo
  \end{enumerate}
- Attraverso questi parametri è quantificata la complessità della rete  
+ Per ognuno di essi sono state effettuate 70 run per dataset su 50 valori di noise compresi tra 0 e 1. 
+ \\
+ I grafici seguenti mostreranno media e deviazione standard.
 \end{frame}
 
 \begin{frame}
- \frametitle{Score su \textit{Moons} e \textit{Circles+}}
+ \frametitle{Loss su \textit{Moons} e \textit{Circles+}}
   \begin{figure}[H]
    \includegraphics[scale = 0.42]{images/score_noise_moons.png}
    \includegraphics[scale = 0.42]{images/score_noise_circles+.png}
@@ -203,8 +225,8 @@
 \begin{frame}
  \frametitle{Conclusioni}
  \begin{enumerate}
-  \item [-] L'algoritmo è in grado di classificare i dataset testati
-  \item [-] La separazione tra train set e test set nell'addestramento e valutazione della rete sembra sufficiente a far si che la complessità rimanga finita
+  \item [-] L'algoritmo è in grado di evolvere una popolazione e restituire una rete capace di classificare i dataset testati
+  \item [-] La separazione tra train set e test set tra addestramento e valutazione della rete risulta sufficiente a far si che la complessità rimanga finita
  \end{enumerate}
 
 \end{frame}
@@ -215,9 +237,24 @@
  \begin{enumerate}
   \item [-] Applicazione a dataset reali
   \item [-] Applicazioni a reti neurali a convoluzione
-  \item [-] Aggiunta nell'algoritmo di una penalità per la complessità della rete e confronto dei risultati.
+  \item [-] Aggiunta nell'algoritmo di una penalità esplicita per reti troppo complesse e confronto dei risultati.
  \end{enumerate}
 
 \end{frame}
+
+\begin{frame}
+\centering
+ \huge Grazie per l'attenzione.
+\end{frame}
+
+\begin{frame}
+ 
+\end{frame}
+
+\begin{frame}
+ \frametitle{Contents }
+\end{frame}
+
+
 
 \end{document}
